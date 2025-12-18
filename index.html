@@ -63,43 +63,38 @@
 <body class="bg-brand-dark text-brand-text font-sans antialiased selection:bg-brand-accent selection:text-brand-dark">
 
     <!-- Header -->
-    <header class="fixed w-full z-50 bg-brand-dark/90 backdrop-blur-md border-b border-white/5">
-        <div class="container mx-auto px-6 h-20 flex items-center justify-between relative">
-            <a href="#" class="flex items-center gap-3 group relative z-20">
-                <!-- ロゴ画像のみに変更 -->
+    <header class="fixed w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/5 shadow-lg">
+        <!-- 最上位：COMING SOON Bar -->
+        <div class="w-full py-3 bg-brand-dark border-b border-white/5 text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-brand-accent/5 animate-pulse"></div>
+            <span class="relative z-10 font-serif font-black text-3xl md:text-4xl text-brand-accent tracking-[0.2em] drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]">
+                COMING SOON
+            </span>
+        </div>
+
+        <!-- 下段：Logo & Nav -->
+        <div class="container mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <!-- ロゴ画像のみ -->
                 <img src="image.png" alt="Savepoint Logo" class="h-10 w-auto object-contain">
             </a>
 
-            <!-- COMING SOON Label -->
-            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full text-center pointer-events-none">
-                <span class="font-serif font-black text-3xl md:text-5xl text-brand-accent tracking-widest drop-shadow-[0_0_15px_rgba(251,191,36,0.6)] animate-pulse">
-                    COMING SOON
-                </span>
-            </div>
-
-            <nav class="hidden md:flex items-center gap-8 relative z-20 bg-brand-dark/50 p-2 rounded-full border border-white/5 backdrop-blur-sm">
+            <nav class="hidden md:flex items-center gap-8 bg-brand-dark/50 p-2 rounded-full border border-white/5 backdrop-blur-sm">
                 <a href="#concept" class="text-sm text-brand-muted hover:text-brand-accent transition-colors pl-4">コンセプト</a>
                 <a href="#features" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">機能</a>
                 <a href="#support" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">サポート</a>
                 <a href="#pricing" class="text-sm text-brand-muted hover:text-brand-accent transition-colors pr-4">プラン</a>
-                <!-- 
-                <div class="flex items-center gap-4 ml-4">
-                    <a href="#" class="text-sm font-medium hover:text-brand-accent transition-colors">ログイン</a>
-                    <a href="#" class="px-5 py-2 bg-brand-accent text-brand-dark text-sm font-bold rounded hover:bg-white hover:shadow-[0_0_15px_rgba(251,191,36,0.5)] transition-all duration-300">
-                        会員登録
-                    </a>
-                </div>
-                -->
             </nav>
             <!-- Mobile Menu Button -->
-            <button class="md:hidden text-brand-text hover:text-brand-accent relative z-20">
+            <button class="md:hidden text-brand-text hover:text-brand-accent">
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <!-- ヘッダーが高くなった分、ptを増やして調整 -->
+    <section class="relative min-h-screen flex items-center justify-center pt-40 md:pt-48 overflow-hidden">
         <!-- Background Elements -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-accent/5 rounded-full blur-3xl pointer-events-none"></div>
         
@@ -113,15 +108,23 @@
             </h1>
             <p class="text-brand-muted text-lg md:text-xl max-w-4xl mx-auto leading-relaxed mb-12 text-left md:text-center">
                 一瞬の問診では考慮されない、あなたの生活習慣や身体の癖。<br class="hidden md:inline">
-                見過ごしがちな「些細なこと」を記録しておきましょう。<br><br class="md:hidden">
+                見過ごしがちな「些細なこと」を記録しておきましょう。
+                
+                <!-- 行間を調整（前回の半分程度） -->
+                <span class="block h-4 md:h-6"></span>
+                
                 日々その時々で移ろいゆく人生のモチベーション。<br class="hidden md:inline">
-                変わって当たり前だけど、変わりすぎると迷ってしまいますから、<br class="hidden md:inline">
-                ちょっとしたことでも記しておきましょう。<br><br class="md:hidden">
+                変わって当然ですが、それが過ぎると迷ってしまいますよね。<br class="hidden md:inline">
+                ちょっとしたことでも記しておきましょう。
+
+                <!-- 同様の行間を追加 -->
+                <span class="block h-4 md:h-6"></span>
+
                 Save Point は未来の健康と決断を支える実用的なデータベースです。
             </p>
             
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#" class="w-full sm:w-auto px-8 py-4 bg-brand-accent text-brand-dark font-bold text-lg rounded shadow-[0_0_20px_rgba(251,191,36,0.2)] hover:shadow-[0_0_30px_rgba(251,191,36,0.4)] hover:-translate-y-1 transition-all duration-300">
+                <a href="regi.html" class="w-full sm:w-auto px-8 py-4 bg-brand-accent text-brand-dark font-bold text-lg rounded shadow-[0_0_20px_rgba(251,191,36,0.2)] hover:shadow-[0_0_30px_rgba(251,191,36,0.4)] hover:-translate-y-1 transition-all duration-300">
                     無料でアカウントを作成
                 </a>
                 <a href="#features" class="w-full sm:w-auto px-8 py-4 border border-brand-muted/30 text-brand-text font-medium rounded hover:bg-white/5 transition-all duration-300">
@@ -506,7 +509,7 @@
                         <span class="text-sm text-brand-muted font-sans font-normal">+tax</span>
                     </div>
                     
-                    <a href="#" class="w-full md:w-2/3 py-4 bg-brand-accent text-brand-dark font-bold text-lg rounded shadow-[0_0_20px_rgba(251,191,36,0.3)] hover:bg-white hover:scale-[1.02] transition-all duration-300">
+                    <a href="regi.html" class="w-full md:w-2/3 py-4 bg-brand-accent text-brand-dark font-bold text-lg rounded shadow-[0_0_20px_rgba(251,191,36,0.3)] hover:bg-white hover:scale-[1.02] transition-all duration-300">
                         ヒストリーシートを作成する
                     </a>
                     <p class="text-xs text-brand-muted">
