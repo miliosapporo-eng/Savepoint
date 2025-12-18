@@ -1,1 +1,544 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savepoint - 自分の意思で生きる為のマイヒストリーシート。</title>
+    <meta name="description" content="一瞬の問診では伝わらない、あなたの生活習慣や身体の癖を記録する実用ダイアリー。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a', // slate-900
+                            main: '#1e293b', // slate-800
+                            accent: '#fbbf24', // amber-400
+                            text: '#e2e8f0', // slate-200
+                            muted: '#94a3b8', // slate-400
+                            highlight: '#38bdf8', // sky-400 (データ・知性)
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        serif: ['"Noto Serif JP"', 'serif'],
+                    },
+                    backgroundImage: {
+                        'glow': 'conic-gradient(from 180deg at 50% 50%, #1e293b 0deg, #0f172a 180deg, #1e293b 360deg)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* カスタムスクロールバー */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        
+        /* 光の演出 */
+        .save-light {
+            box-shadow: 0 0 20px 5px rgba(251, 191, 36, 0.15);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-brand-text font-sans antialiased selection:bg-brand-accent selection:text-brand-dark">
 
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-brand-dark/90 backdrop-blur-md border-b border-white/5">
+        <div class="container mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <!-- ロゴ画像のみに変更 -->
+                <img src="image.png" alt="Savepoint Logo" class="h-10 w-auto object-contain">
+            </a>
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#concept" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">コンセプト</a>
+                <a href="#features" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">機能</a>
+                <a href="#support" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">サポート</a>
+                <a href="#pricing" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">プラン</a>
+                <div class="flex items-center gap-4 ml-4">
+                    <a href="#" class="text-sm font-medium hover:text-brand-accent transition-colors">ログイン</a>
+                    <a href="#" class="px-5 py-2 bg-brand-accent text-brand-dark text-sm font-bold rounded hover:bg-white hover:shadow-[0_0_15px_rgba(251,191,36,0.5)] transition-all duration-300">
+                        会員登録
+                    </a>
+                </div>
+            </nav>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-brand-text hover:text-brand-accent">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="inline-block mb-6 px-3 py-1 border border-brand-accent/30 rounded-full bg-brand-accent/5 text-brand-accent text-xs tracking-widest uppercase">
+                Practical Personal History
+            </div>
+            <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8">
+                自分の意思で生きる為の<br>
+                <span class="text-brand-accent text-glow">マイヒストリーシート。</span>
+            </h1>
+            <p class="text-brand-muted text-lg md:text-xl max-w-4xl mx-auto leading-relaxed mb-12 text-left md:text-center">
+                一瞬の問診では考慮されない、あなたの生活習慣や身体の癖。<br class="hidden md:inline">
+                見過ごしがちな「些細なこと」を記録しておきましょう。<br><br class="md:hidden">
+                日々その時々で移ろいゆく人生のモチベーション。<br class="hidden md:inline">
+                変わって当たり前だけど、変わりすぎると迷ってしまいますから、<br class="hidden md:inline">
+                ちょっとしたことでも記しておきましょう。<br><br class="md:hidden">
+                Save Point は未来の健康と決断を支える実用的なデータベースです。
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#" class="w-full sm:w-auto px-8 py-4 bg-brand-accent text-brand-dark font-bold text-lg rounded shadow-[0_0_20px_rgba(251,191,36,0.2)] hover:shadow-[0_0_30px_rgba(251,191,36,0.4)] hover:-translate-y-1 transition-all duration-300">
+                    無料でアカウントを作成
+                </a>
+                <a href="#features" class="w-full sm:w-auto px-8 py-4 border border-brand-muted/30 text-brand-text font-medium rounded hover:bg-white/5 transition-all duration-300">
+                    機能を見る
+                </a>
+            </div>
+
+            <div class="mt-6 text-sm text-brand-accent/90 font-bold tracking-wide">
+                ⚠️ 医療行為は行っておりません ⚠️
+            </div>
+            
+            <div class="mt-20 animate-bounce text-brand-muted/50">
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Concept Section -->
+    <section id="concept" class="py-24 bg-brand-main border-y border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="order-2 md:order-1 relative">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-brand-accent/20 to-transparent blur-2xl rounded-full"></div>
+                    <img src="https://images.unsplash.com/photo-1555431189-0fabf2667795?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Writing detailed notes" class="relative rounded-lg shadow-2xl border border-white/10 opacity-90 grayscale hover:grayscale-0 transition-all duration-700">
+                </div>
+                <div class="order-1 md:order-2">
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8 leading-snug">
+                        自分のことは、<br>
+                        自分にしか分からない。
+                    </h2>
+                    <p class="text-brand-muted leading-relaxed mb-6">
+                        時が経ってみると、些細に思えたことが、後の人間関係や健康問題に直結する重要な出来事だったと気づくことがあります。<br>
+                        しかし、記憶のメモリはあまりに脆く、重要な「予兆」さえも、すぐに消えてしまうのです。
+                    </p>
+                    <p class="text-brand-muted leading-relaxed mb-6">
+                        「限界を自分で作るな」と言う人もいますが、その人は他人が壊れても責任は取ってくれません。<br>
+                        一理はあっても真理ではないのです。壊れてからでは遅いのです。
+                    </p>
+                    <p class="text-brand-text font-serif text-lg border-l-2 border-brand-accent pl-4 italic">
+                        私たちに必要なのは、<br>就活のエントリーシートではなく、<br>
+                        人生を集約した「ヒストリーシート」なのではないでしょうか。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features / Interface Section -->
+    <section id="features" class="py-24 bg-brand-dark relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-brand-accent text-sm tracking-widest uppercase mb-2 block">The Interface</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold">「因果」をつなぐ、3カラム構成</h2>
+                <p class="text-brand-muted mt-4">過去の要因、現在の状況、未来への対策。全てを一望できるコックピット。</p>
+            </div>
+
+            <!-- UI Mockup Container -->
+            <div class="max-w-7xl mx-auto bg-brand-main rounded-xl border border-white/10 shadow-2xl overflow-hidden">
+                <!-- Mockup Header -->
+                <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-brand-dark/30">
+                    <div class="text-sm text-brand-muted">202X年 11月 15日 (金)</div>
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                    </div>
+                </div>
+
+                <!-- 3 Columns Layout -->
+                <div class="grid grid-cols-1 md:grid-cols-12 min-h-[600px] divide-y md:divide-y-0 md:divide-x divide-white/10">
+                    
+                    <!-- Left: Past (History/Cause) -->
+                    <div class="md:col-span-3 bg-brand-dark/20 flex flex-col group hover:bg-brand-dark/30 transition-colors">
+                        <div class="p-4 border-b border-white/5 flex items-center justify-between">
+                            <div class="flex items-center gap-2 text-brand-muted">
+                                <i class="fa-solid fa-history text-xs"></i>
+                                <h3 class="font-serif text-sm font-bold tracking-widest">PAST</h3>
+                            </div>
+                            <span class="text-xs text-brand-muted/50">要因・追想</span>
+                        </div>
+                        <div class="p-6 flex-1">
+                            <p class="text-xs text-brand-muted mb-3 opacity-50 group-hover:opacity-100 transition-opacity">
+                                <i class="fa-solid fa-pen mr-1"></i>過去の病歴・トラウマなど
+                            </p>
+                            <div class="text-sm text-brand-text leading-loose font-serif text-brand-muted/80">
+                                中学生の頃、部活で痛めた右膝。雨の日に疼くのはあの時の古傷かもしれない。<br><br>
+                                そういえば、父も50代で同じような膝の痛みを訴えていた。遺伝的な骨格の問題か？記録しておく。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center: Present (Today's Log) -->
+                    <div class="md:col-span-6 bg-brand-main flex flex-col relative">
+                         <!-- Glow effect -->
+                         <div class="absolute inset-0 bg-brand-highlight/5 blur-3xl -z-10 pointer-events-none"></div>
+
+                        <!-- Center Header -->
+                        <div class="p-4 border-b border-white/10 text-center bg-brand-accent/5">
+                            <h3 class="font-serif text-lg text-brand-accent font-bold tracking-widest drop-shadow-md">TODAY</h3>
+                        </div>
+
+                        <!-- Morning Row -->
+                        <div class="flex-1 p-6 border-b border-white/10 hover:bg-brand-dark/20 transition-colors flex flex-col">
+                            <label class="text-xs text-brand-accent/70 mb-2 flex items-center gap-2 font-bold tracking-wider">
+                                <i class="fa-regular fa-sun"></i> MORNING
+                            </label>
+                            <p class="text-sm text-brand-text leading-relaxed font-serif">
+                                起床時に軽い目眩あり。昨晩の深酒（ビール2杯、ワイン1杯）が原因か、気圧の変化か。<br>
+                                <span class="text-brand-muted text-xs block mt-1">血圧: 125/78, 体温: 36.4℃</span>
+                            </p>
+                        </div>
+
+                        <!-- Afternoon Row -->
+                        <div class="flex-1 p-6 border-b border-white/10 hover:bg-brand-dark/20 transition-colors flex flex-col">
+                            <label class="text-xs text-brand-accent/70 mb-2 flex items-center gap-2 font-bold tracking-wider">
+                                <i class="fa-solid fa-sun"></i> AFTERNOON
+                            </label>
+                            <p class="text-sm text-brand-text leading-relaxed font-serif">
+                                ランチは蕎麦（十割）。最近、小麦を控えると午後の集中力が続く気がする。食後の眠気も少ない。<br>
+                                デスクワーク中、無意識に足を組む癖が出ている。右足が上。骨盤の歪みに注意。
+                            </p>
+                        </div>
+
+                        <!-- Evening Row -->
+                        <div class="flex-1 p-6 hover:bg-brand-dark/20 transition-colors flex flex-col">
+                            <label class="text-xs text-brand-accent/70 mb-2 flex items-center gap-2 font-bold tracking-wider">
+                                <i class="fa-solid fa-moon"></i> EVENING
+                            </label>
+                            <p class="text-sm text-brand-text leading-relaxed font-serif">
+                                上司との面談でストレスを感じた時、奥歯を強く噛み締める癖に気づいた。最近の顎の痛みと頭痛の原因はこれかもしれない。<br>
+                                帰宅後、ストレッチを実施。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right: Future (Strategy) -->
+                    <div class="md:col-span-3 bg-brand-dark/20 flex flex-col group hover:bg-brand-dark/30 transition-colors">
+                        <div class="p-4 border-b border-white/5 flex items-center justify-between">
+                            <div class="flex items-center gap-2 text-brand-muted">
+                                <i class="fa-solid fa-paper-plane text-xs"></i>
+                                <h3 class="font-serif text-sm font-bold tracking-widest">FUTURE</h3>
+                            </div>
+                            <span class="text-xs text-brand-muted/50">対策・予定</span>
+                        </div>
+                        <div class="p-6 flex-1">
+                             <p class="text-xs text-brand-muted mb-3 opacity-50 group-hover:opacity-100 transition-opacity">
+                                <i class="fa-solid fa-pen mr-1"></i>健康目標・検診予定
+                            </p>
+                            <div class="text-sm text-brand-text leading-loose font-serif text-brand-muted/80">
+                                来月の人間ドックまでに体重をあと2kg落とす。<br><br>
+                                そのために明日から、夕食の炭水化物を抜く実験をしてみる。効果があれば継続。<br>
+                                歯科検診の予約を入れること。
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <p class="text-center text-brand-muted mt-8 text-sm">
+                ※ 日々の些細な違和感の記録が、いつか人に話す時に役立ちます。
+            </p>
+
+            <!-- More Features (Additional) -->
+            <div class="mt-32 pt-16 border-t border-white/5">
+                <div class="text-center mb-16">
+                    <h3 class="font-serif text-2xl md:text-4xl font-bold mb-6">
+                        <span class="text-brand-accent text-glow">3カラムだけじゃない！</span><br>
+                        続けられる、役立つ機能。
+                    </h3>
+                    <p class="text-brand-muted">
+                        記録を「義務」にしないための遊び心と、<br class="md:hidden">生活を守る実用的なツールも用意しています。
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+                    
+                    <!-- Feature A: Tarot -->
+                    <div class="bg-brand-main rounded-2xl p-8 border border-white/5 hover:border-brand-accent/50 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition-colors"></div>
+                        <div class="w-14 h-14 bg-brand-dark rounded-xl flex items-center justify-center mb-6 border border-white/10 shadow-lg text-purple-400">
+                            <i class="fa-solid fa-wand-magic-sparkles text-2xl"></i>
+                        </div>
+                        <h4 class="font-serif text-xl font-bold mb-3">
+                            利用意欲を高める<br>タロットゲーム
+                        </h4>
+                        <p class="text-sm text-brand-muted leading-relaxed">
+                            「今日はどんな一日になる？」<br>
+                            ログインするたびに引けるデイリータロット。深層心理への気づきを与えてくれるメッセージが、日々の記録へのモチベーションを高めます。
+                        </p>
+                    </div>
+
+                    <!-- Feature B: Chat Bot -->
+                    <div class="bg-brand-main rounded-2xl p-8 border border-white/5 hover:border-brand-accent/50 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-green-500/10 rounded-full blur-2xl group-hover:bg-green-500/20 transition-colors"></div>
+                        <div class="w-14 h-14 bg-brand-dark rounded-xl flex items-center justify-center mb-6 border border-white/10 shadow-lg text-green-400">
+                            <i class="fa-solid fa-comments text-2xl"></i>
+                        </div>
+                        <h4 class="font-serif text-xl font-bold mb-3">
+                            会話をするように記入<br>「もしもしボット」
+                        </h4>
+                        <p class="text-sm text-brand-muted leading-relaxed">
+                            文章を書くのが苦手でも大丈夫。<br>
+                            「今日は何があった？」「体調はどう？」と優しく聞いてくれるボットとチャットするだけで、いつの間にか日記が完成します。
+                        </p>
+                    </div>
+
+                    <!-- Feature C: Medicine Alert -->
+                    <div class="bg-brand-main rounded-2xl p-8 border border-white/5 hover:border-brand-accent/50 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-red-500/10 rounded-full blur-2xl group-hover:bg-red-500/20 transition-colors"></div>
+                        <div class="w-14 h-14 bg-brand-dark rounded-xl flex items-center justify-center mb-6 border border-white/10 shadow-lg text-red-400">
+                            <i class="fa-solid fa-pills text-2xl"></i>
+                        </div>
+                        <h4 class="font-serif text-xl font-bold mb-3">
+                            誰でも必要！<br>お薬アラート
+                        </h4>
+                        <p class="text-sm text-brand-muted leading-relaxed">
+                            毎日の服薬管理もこれ一つで。<br>
+                            あなたの生活リズムに合わせて通知を送ります。飲み忘れを防ぎ、服薬の履歴も自動的にヒストリーシートへ記録されます。
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Why Paid? / Security (Now with Premium Support) -->
+    <section class="py-24 bg-brand-main border-y border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-8 rounded-lg bg-brand-dark/50 border border-white/5 hover:border-brand-accent/30 transition-colors group">
+                    <div class="w-12 h-12 bg-brand-main rounded-full flex items-center justify-center mb-6 text-brand-accent group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-user-doctor text-xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">医師への「申し送り」</h3>
+                    <p class="text-sm text-brand-muted leading-relaxed">
+                        日々のバイタル、食事、痛みの頻度。それらを蓄積することで、いざという時の受診で医師に正確な情報を提供できます。
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="p-8 rounded-lg bg-brand-dark/50 border border-white/5 hover:border-brand-accent/30 transition-colors group">
+                    <div class="w-12 h-12 bg-brand-main rounded-full flex items-center justify-center mb-6 text-brand-accent group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-fingerprint text-xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">思考と癖のパターン化</h3>
+                    <p class="text-sm text-brand-muted leading-relaxed">
+                        「ストレスを感じると胃に来る」「季節の変わり目に頭痛がする」。自分特有のパターンを知ることで、予防が可能になります。
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="p-8 rounded-lg bg-brand-dark/50 border border-white/5 hover:border-brand-accent/30 transition-colors group">
+                    <div class="w-12 h-12 bg-brand-main rounded-full flex items-center justify-center mb-6 text-brand-accent group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-database text-xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">人生のデータベース</h3>
+                    <p class="text-sm text-brand-muted leading-relaxed">
+                        紙の手帳と異なり、検索やタグ付けが可能。「5年前のあの症状はいつ始まったか？」を即座に引き出せます。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Support Services -->
+    <section id="support" class="py-24 bg-brand-dark relative border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-brand-accent text-sm tracking-widest uppercase mb-2 block">Premium Support</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold">記録を「実行力」に変える<br>専門家サポート</h2>
+                <p class="text-brand-muted mt-4">日記サービスの枠を超え、あなたの意思を現実に反映させるための課金式オプション。</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <!-- Support 1: ACP -->
+                <div class="bg-brand-main rounded-xl p-8 border border-white/5 hover:border-brand-accent/50 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-hand-holding-heart text-6xl text-brand-accent"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-serif text-xl font-bold mb-4 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded bg-brand-accent/10 flex items-center justify-center text-brand-accent text-sm"><i class="fa-solid fa-comments"></i></span>
+                            人生会議（ACP）支援
+                        </h3>
+                        <p class="text-sm text-brand-muted leading-relaxed mb-6">
+                            「もしも」の時の医療やケアの希望を、元気なうちに家族や医療者と話し合うプロセス（アドバンス・ケア・プランニング）をガイドします。蓄積したログを元に、あなたの価値観を反映した事前指示書の作成を支援します。
+                        </p>
+                        <a href="#" class="text-xs font-bold text-brand-accent hover:text-white transition-colors flex items-center gap-1">
+                            詳細を見る <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Support 2: Professional -->
+                <div class="bg-brand-main rounded-xl p-8 border border-white/5 hover:border-brand-accent/50 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-scale-balanced text-6xl text-brand-accent"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-serif text-xl font-bold mb-4 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded bg-brand-accent/10 flex items-center justify-center text-brand-accent text-sm"><i class="fa-solid fa-file-signature"></i></span>
+                            士業・専門家相談
+                        </h3>
+                        <p class="text-sm text-brand-muted leading-relaxed mb-6">
+                            遺言書作成、成年後見、相続対策など。あなたの記録された「意思」を法的に守るため、Savepointの理念を深く理解した弁護士・税理士・司法書士へスムーズにお繋ぎします。
+                        </p>
+                        <a href="#" class="text-xs font-bold text-brand-accent hover:text-white transition-colors flex items-center gap-1">
+                            詳細を見る <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Support 3: Nursing & Housing -->
+                <div class="bg-brand-main rounded-xl p-8 border border-white/5 hover:border-brand-accent/50 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-house-medical text-6xl text-brand-accent"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-serif text-xl font-bold mb-4 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded bg-brand-accent/10 flex items-center justify-center text-brand-accent text-sm"><i class="fa-solid fa-bed-pulse"></i></span>
+                            訪問看護・高齢者住宅
+                        </h3>
+                        <p class="text-sm text-brand-muted leading-relaxed mb-6">
+                            身体状況の変化に応じた住まいの選択や、在宅医療の導入について。提携する訪問看護師やケアマネジャーが、あなたのヒストリーシートを参照しながら最適な環境をご提案します。
+                        </p>
+                        <a href="#" class="text-xs font-bold text-brand-accent hover:text-white transition-colors flex items-center gap-1">
+                            詳細を見る <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Support 4: Legacy Organization -->
+                <div class="bg-brand-main rounded-xl p-8 border border-white/5 hover:border-brand-accent/50 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-boxes-packing text-6xl text-brand-accent"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-serif text-xl font-bold mb-4 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded bg-brand-accent/10 flex items-center justify-center text-brand-accent text-sm"><i class="fa-solid fa-box-open"></i></span>
+                            遺品整理・生前整理
+                        </h3>
+                        <p class="text-sm text-brand-muted leading-relaxed mb-6">
+                            物理的なモノの整理は、心の整理でもあります。元気なうちに行う「生前整理」から、ご遺族の負担を減らす「遺品整理」、そしてデジタル遺品の処理まで。思い出を大切に扱う専門業者がサポートします。
+                        </p>
+                        <a href="#" class="text-xs font-bold text-brand-accent hover:text-white transition-colors flex items-center gap-1">
+                            詳細を見る <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            
+            <p class="text-center text-brand-muted mt-10 text-xs">
+                ※ 各種サポートは別途オプション料金、または専門家との個別契約となります。
+            </p>
+        </div>
+    </section>
+
+    <!-- Pricing / CTA -->
+    <section id="pricing" class="py-24 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto bg-gradient-to-b from-brand-main to-brand-dark p-10 rounded-2xl border border-brand-accent/30 text-center shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">
+                    今、ここをセーブポイントにする。
+                </h2>
+                <p class="text-brand-muted mb-8">
+                    まずは30日間の無料トライアルで、<br>
+                    あなた自身の「傾向」を見つけてください。
+                </p>
+
+                <div class="flex flex-col items-center gap-6">
+                    <div class="text-3xl font-bold font-serif text-brand-accent">
+                        <span class="text-sm text-brand-muted font-sans font-normal">月額</span>
+                        ¥500
+                        <span class="text-sm text-brand-muted font-sans font-normal">（税込）</span>
+                    </div>
+                    
+                    <a href="#" class="w-full md:w-2/3 py-4 bg-brand-accent text-brand-dark font-bold text-lg rounded shadow-[0_0_20px_rgba(251,191,36,0.3)] hover:bg-white hover:scale-[1.02] transition-all duration-300">
+                        ヒストリーシートを作成する
+                    </a>
+                    <p class="text-xs text-brand-muted">
+                        いつでもキャンセル可能です。<br>
+                        あなたのデータは退会後も一定期間保持され、いつでも再開できます。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark pt-16 pb-8 border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10">
+                <a href="#" class="flex items-center gap-3 mb-4 md:mb-0">
+                    <!-- ロゴ画像のみに変更 -->
+                    <img src="image.png" alt="Savepoint Logo" class="h-8 w-auto object-contain">
+                </a>
+                <div class="flex gap-6 text-sm text-brand-muted">
+                    <a href="#" class="hover:text-brand-text transition-colors">運営会社</a>
+                    <a href="#" class="hover:text-brand-text transition-colors">利用規約</a>
+                    <a href="#" class="hover:text-brand-text transition-colors">プライバシーポリシー</a>
+                    <a href="#" class="hover:text-brand-text transition-colors">お問い合わせ</a>
+                </div>
+            </div>
+            <div class="text-center text-xs text-brand-muted/50">
+                &copy; 2025 MiLio, LLC all rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // シンプルなスクロール時のヘッダー制御（オプション）
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+</body>
+</html>
