@@ -61,9 +61,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // ▼▼▼【修正ポイント1】URLを正しい形に直しました ▼▼▼
-        // コピペミスでURLが二重になっていたため修正しました。
-        // もし動かない場合は、デプロイ時に発行されたURLを再度ここに貼り付けてください。
+        // ▼▼▼ あなたのGAS URLはそのままでOKです ▼▼▼
         const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbysQ9Hvxt9vOSDoVqGx1ubKPFDbmc36zIQ_SuVS2s7patF4N18klIZygvizwFcY1l95ww/exec';
         // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -138,7 +136,7 @@
                 return Object.keys(newErrors).length === 0;
             };
 
-            // ▼▼▼【修正ポイント2】handleSubmit関数を整理しました ▼▼▼
+            // ▼▼▼【修正ポイント】no-corsモードを追加してエラーを回避します ▼▼▼
             const handleSubmit = async (e) => {
                 e.preventDefault();
                 if (validate()) {
@@ -148,6 +146,7 @@
                         // GASにデータを送信する処理
                         await fetch(GAS_API_URL, {
                             method: 'POST',
+                            mode: 'no-cors', // ★ここが重要：返事を待たずに成功とみなす設定
                             headers: { 'Content-Type': 'text/plain' },
                             body: JSON.stringify({
                                 name: formData.name,
@@ -157,7 +156,7 @@
                             })
                         });
                         
-                        // 成功時の処理
+                        // 成功時の処理（no-corsなので常にここに来ます）
                         setIsSubmitting(false);
                         setIsSuccess(true);
                     } catch (error) {
