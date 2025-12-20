@@ -93,8 +93,8 @@
             </button>
         </div>
 
-        <!-- Mobile Menu Overlay (Added) -->
-        <div id="mobile-menu" class="fixed inset-0 bg-brand-dark/98 backdrop-blur-xl z-20 flex flex-col items-center justify-center gap-10 transition-transform duration-300 translate-x-full md:hidden">
+        <!-- Mobile Menu Overlay (Modified: 不透明に変更) -->
+        <div id="mobile-menu" class="fixed inset-0 bg-brand-dark z-20 flex flex-col items-center justify-center gap-10 transition-transform duration-300 translate-x-full md:hidden">
             <a href="#concept" class="text-2xl font-serif font-bold hover:text-brand-accent transition-colors mobile-link">コンセプト</a>
             <a href="#features" class="text-2xl font-serif font-bold hover:text-brand-accent transition-colors mobile-link">機能</a>
             <a href="#support" class="text-2xl font-serif font-bold hover:text-brand-accent transition-colors mobile-link">サポート</a>
@@ -117,7 +117,8 @@
             <div class="inline-block mb-6 px-3 py-1 border border-brand-accent/30 rounded-full bg-brand-accent/5 text-brand-accent text-xs tracking-widest uppercase">
                 Practical Personal History
             </div>
-            <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8">
+            <!-- フォントサイズ調整: スマホ(text-3xl) -> タブレット(text-5xl) -> PC(text-7xl) と段階的に変化 -->
+            <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 break-words">
                 自分の意思で生きる為の<br>
                 <span class="text-brand-accent text-glow">マイヒストリーシート。</span>
             </h1>
@@ -192,7 +193,8 @@
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <span class="text-brand-accent text-sm tracking-widest uppercase mb-2 block">The Interface</span>
-                <h2 class="font-serif text-3xl md:text-4xl font-bold">「因果」をつなぐ、3カラム構成</h2>
+                <!-- フォントサイズ調整: スマホで見やすいサイズ(text-2xl)からスタート -->
+                <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-bold">「因果」をつなぐ、3カラム構成</h2>
                 <p class="text-brand-muted mt-4">過去の要因、現在の状況、未来への対策。全てを一望できるコックピット。</p>
             </div>
 
@@ -306,7 +308,7 @@
             <!-- More Features (Additional) -->
             <div class="mt-32 pt-16 border-t border-white/5">
                 <div class="text-center mb-16">
-                    <h3 class="font-serif text-2xl md:text-4xl font-bold mb-6">
+                    <h3 class="font-serif text-2xl md:text-3xl lg:text-4xl font-bold mb-6">
                         <span class="text-brand-accent text-glow">3カラムだけじゃない！</span><br>
                         続けられる、役立つ機能。
                     </h3>
@@ -413,7 +415,8 @@
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <span class="text-brand-accent text-sm tracking-widest uppercase mb-2 block">Premium Support</span>
-                <h2 class="font-serif text-3xl md:text-4xl font-bold">記録を「実行力」に変える<br>専門家サポート</h2>
+                <!-- フォントサイズ調整 -->
+                <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-bold">記録を「実行力」に変える<br>専門家サポート</h2>
                 <p class="text-brand-muted mt-4">日記サービスの枠を超え、あなたの意思を現実に反映させるための課金式オプション。</p>
             </div>
 
@@ -509,7 +512,8 @@
 
         <div class="container mx-auto px-6 relative z-10">
             <div class="max-w-3xl mx-auto bg-gradient-to-b from-brand-main to-brand-dark p-10 rounded-2xl border border-brand-accent/30 text-center shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-                <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">
+                <!-- フォントサイズ調整 -->
+                <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
                     今、ここをセーブポイントにする。
                 </h2>
                 <p class="text-brand-muted mb-8">
