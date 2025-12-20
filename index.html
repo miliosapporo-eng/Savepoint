@@ -87,14 +87,14 @@
                 <a href="#pricing" class="text-sm text-brand-muted hover:text-brand-accent transition-colors pr-4">プラン</a>
             </nav>
             
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-brand-text hover:text-brand-accent relative z-30 focus:outline-none transition-colors">
+            <!-- Mobile Menu Button (z-indexを50に上げてメニューより手前に表示) -->
+            <button id="mobile-menu-btn" class="md:hidden text-brand-text hover:text-brand-accent relative z-50 focus:outline-none transition-colors">
                 <i class="fa-solid fa-bars text-2xl"></i>
             </button>
         </div>
 
-        <!-- Mobile Menu Overlay (Modified: 位置調整 pt-40 -> pt-32) -->
-        <div id="mobile-menu" class="fixed inset-0 bg-brand-dark z-20 flex flex-col items-center justify-start pt-32 gap-8 transition-transform duration-300 translate-x-full md:hidden">
+        <!-- Mobile Menu Overlay (Modified: z-40でロゴの上に配置し、背景透過と強烈なブラーを追加) -->
+        <div id="mobile-menu" class="fixed inset-0 bg-brand-dark/80 backdrop-blur-xl z-40 flex flex-col items-center justify-start pt-32 gap-8 transition-transform duration-300 translate-x-full md:hidden">
             <a href="#concept" class="text-lg font-serif font-bold text-white hover:text-brand-accent transition-colors mobile-link">コンセプト</a>
             <a href="#features" class="text-lg font-serif font-bold text-white hover:text-brand-accent transition-colors mobile-link">機能</a>
             <a href="#support" class="text-lg font-serif font-bold text-white hover:text-brand-accent transition-colors mobile-link">サポート</a>
