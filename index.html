@@ -16,11 +16,11 @@
                 extend: {
                     colors: {
                         brand: {
-                            dark: '#0f172a', // slate-900
-                            main: '#1e293b', // slate-800
-                            accent: '#fbbf24', // amber-400
-                            text: '#e2e8f0', // slate-200
-                            muted: '#94a3b8', // slate-400
+                            dark: '#0f172a', // slate-900 (ベース背景: 深い夜の色)
+                            main: '#1e293b', // slate-800 (カード背景)
+                            accent: '#fbbf24', // amber-400 (アクセント: セーブポイントの光)
+                            text: '#e2e8f0', // slate-200 (テキスト)
+                            muted: '#94a3b8', // slate-400 (補足テキスト)
                             highlight: '#38bdf8', // sky-400 (データ・知性)
                         }
                     },
@@ -75,8 +75,9 @@
         <!-- 下段：Logo & Nav -->
         <div class="container mx-auto px-6 h-16 flex items-center justify-between relative">
             <a href="#" class="flex items-center gap-3 group relative z-30">
-                <!-- ロゴ画像のみ -->
-                <img src="image.png" alt="Savepoint Logo" class="h-10 w-auto object-contain">
+                <!-- ロゴ画像を savepoint.png に変更 -->
+                <!-- デザインに合わせてサイズを微調整 (h-10 -> h-12) -->
+                <img src="savepoint.png" alt="Savepoint Logo" class="h-10 md:h-12 w-auto object-contain drop-shadow-[0_0_8px_rgba(251,191,36,0.3)]">
             </a>
 
             <!-- Desktop Navigation -->
@@ -95,7 +96,6 @@
     </header>
 
     <!-- Mobile Menu Overlay (z-40: Headerの下、コンテンツの上) -->
-    <!-- Modified: Headerの外に出し、背景透明度を下げてブラーを強調 -->
     <div id="mobile-menu" class="fixed inset-0 bg-brand-dark/60 backdrop-blur-3xl z-40 flex flex-col items-center justify-start pt-32 gap-8 transition-transform duration-300 translate-x-full md:hidden">
         <a href="#concept" class="text-lg font-serif font-bold text-white hover:text-brand-accent transition-colors mobile-link">コンセプト</a>
         <a href="#features" class="text-lg font-serif font-bold text-white hover:text-brand-accent transition-colors mobile-link">機能</a>
@@ -109,7 +109,6 @@
     </div>
 
     <!-- Hero Section -->
-    <!-- ヘッダーが高くなった分、ptを増やして調整 -->
     <section class="relative min-h-screen flex items-center justify-center pt-40 md:pt-48 overflow-hidden">
         <!-- Background Elements -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-accent/5 rounded-full blur-3xl pointer-events-none"></div>
@@ -118,7 +117,7 @@
             <div class="inline-block mb-6 px-3 py-1 border border-brand-accent/30 rounded-full bg-brand-accent/5 text-brand-accent text-xs tracking-widest uppercase">
                 Practical Personal History
             </div>
-            <!-- フォントサイズ調整: スマホ(text-3xl) -> タブレット(text-5xl) -> PC(text-7xl) と段階的に変化 -->
+            <!-- フォントサイズ調整: スマホ(text-3xl) -> タブレット(text-5xl) -> PC(text-7xl) -->
             <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 break-words">
                 自分の意思で生きる為の<br>
                 <span class="text-brand-accent text-glow">マイヒストリーシート。</span>
@@ -127,14 +126,12 @@
                 一瞬の問診では考慮されない、あなたの生活習慣や身体の癖。<br class="hidden md:inline">
                 見過ごしがちな「些細なこと」を記録しておきましょう。
                 
-                <!-- 行間を調整（前回の半分程度） -->
                 <span class="block h-4 md:h-6"></span>
                 
                 日々その時々で移ろいゆく人生のモチベーション。<br class="hidden md:inline">
                 変わって当然ですが、それが過ぎると迷ってしまいますよね。<br class="hidden md:inline">
                 ちょっとしたことでも記しておきましょう。
 
-                <!-- 同様の行間を追加 -->
                 <span class="block h-4 md:h-6"></span>
 
                 Save Point は未来の健康と決断を支える実用的なデータベースです。
@@ -194,7 +191,6 @@
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <span class="text-brand-accent text-sm tracking-widest uppercase mb-2 block">The Interface</span>
-                <!-- フォントサイズ調整: スマホで見やすいサイズ(text-2xl)からスタート -->
                 <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-bold">「因果」をつなぐ、3カラム構成</h2>
                 <p class="text-brand-muted mt-4">過去の要因、現在の状況、未来への対策。全てを一望できるコックピット。</p>
             </div>
@@ -371,52 +367,11 @@
         </div>
     </section>
 
-    <!-- Why Paid? / Security (Now with Premium Support) -->
-    <section class="py-24 bg-brand-main border-y border-white/5">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="p-8 rounded-lg bg-brand-dark/50 border border-white/5 hover:border-brand-accent/30 transition-colors group">
-                    <div class="w-12 h-12 bg-brand-main rounded-full flex items-center justify-center mb-6 text-brand-accent group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-user-doctor text-xl"></i>
-                    </div>
-                    <h3 class="font-serif text-xl font-bold mb-3">医師への「申し送り」</h3>
-                    <p class="text-sm text-brand-muted leading-relaxed">
-                        日々のバイタル、食事、痛みの頻度。それらを蓄積することで、いざという時の受診で医師に正確な情報を提供できます。
-                    </p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="p-8 rounded-lg bg-brand-dark/50 border border-white/5 hover:border-brand-accent/30 transition-colors group">
-                    <div class="w-12 h-12 bg-brand-main rounded-full flex items-center justify-center mb-6 text-brand-accent group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-fingerprint text-xl"></i>
-                    </div>
-                    <h3 class="font-serif text-xl font-bold mb-3">思考と癖のパターン化</h3>
-                    <p class="text-sm text-brand-muted leading-relaxed">
-                        「ストレスを感じると胃に来る」「季節の変わり目に頭痛がする」。自分特有のパターンを知ることで、予防が可能になります。
-                    </p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="p-8 rounded-lg bg-brand-dark/50 border border-white/5 hover:border-brand-accent/30 transition-colors group">
-                    <div class="w-12 h-12 bg-brand-main rounded-full flex items-center justify-center mb-6 text-brand-accent group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-database text-xl"></i>
-                    </div>
-                    <h3 class="font-serif text-xl font-bold mb-3">人生のデータベース</h3>
-                    <p class="text-sm text-brand-muted leading-relaxed">
-                        紙の手帳と異なり、検索やタグ付けが可能。「5年前のあの症状はいつ始まったか？」を即座に引き出せます。
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Premium Support Services -->
     <section id="support" class="py-24 bg-brand-dark relative border-t border-white/5">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <span class="text-brand-accent text-sm tracking-widest uppercase mb-2 block">Premium Support</span>
-                <!-- フォントサイズ調整 -->
                 <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-bold">記録を「実行力」に変える<br>専門家サポート</h2>
                 <p class="text-brand-muted mt-4">日記サービスの枠を超え、あなたの意思を現実に反映させるための課金式オプション。</p>
             </div>
@@ -546,10 +501,9 @@
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center mb-10">
                 <a href="#" class="flex items-center gap-3 mb-6 md:mb-0">
-                    <!-- ロゴ画像のみに変更 -->
-                    <img src="image.png" alt="Savepoint Logo" class="h-8 w-auto object-contain">
+                    <!-- ロゴ画像を savepoint.png に変更 -->
+                    <img src="savepoint.png" alt="Savepoint Logo" class="h-8 w-auto object-contain">
                 </a>
-                <!-- 文字サイズと配置をレスポンシブに調整 (text-xs -> md:text-sm, flex-wrap追加) -->
                 <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-brand-muted">
                     <a href="#" class="hover:text-brand-text transition-colors">運営会社</a>
                     <a href="#" class="hover:text-brand-text transition-colors">利用規約</a>
@@ -557,7 +511,6 @@
                     <a href="#" class="hover:text-brand-text transition-colors">お問い合わせ</a>
                 </div>
             </div>
-            <!-- コピーライトも少し小さく調整 -->
             <div class="text-center text-[10px] md:text-xs text-brand-muted/50">
                 &copy; 2025 MiLio, LLC all rights reserved.
             </div>
