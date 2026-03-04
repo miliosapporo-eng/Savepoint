@@ -29,6 +29,14 @@
         #auth-overlay { position: fixed; inset: 0; z-index: 9999; background: var(--brand-dark); display: flex; align-items: center; justify-content: center; transition: opacity 0.5s, visibility 0.5s; }
         #auth-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
+        /* Input specific for Auth with Black text */
+        .auth-input { 
+            background-color: rgba(255, 255, 255, 0.9) !important; 
+            color: #000000 !important; 
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .auth-input::placeholder { color: #666666 !important; }
+
         /* Bot Animations */
         @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(2deg); } }
         @keyframes blink { 0%, 90%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
@@ -63,7 +71,7 @@
 
     <!-- Auth Overlay -->
     <div id="auth-overlay">
-        <div class="max-w-md w-full p-10 text-center bg-brand-main/50 rounded-[3rem] border border-white/5 backdrop-blur-2xl shadow-2xl">
+        <div class="max-w-md w-full p-10 text-center bg-brand-main/80 rounded-[3rem] border border-white/10 backdrop-blur-2xl shadow-2xl">
             <div class="bot-avatar relative w-24 h-24 flex items-center justify-center bg-brand-dark rounded-[2.5rem] border border-brand-accent/30 mx-auto mb-8 shadow-xl shadow-brand-accent/10">
                 <div class="w-12 h-12 flex flex-col items-center justify-center gap-2">
                     <div class="flex gap-3">
@@ -76,24 +84,24 @@
             <h1 class="font-serif text-4xl font-bold mb-2 tracking-tighter text-brand-text">Save Point</h1>
             <p id="auth-sub-msg" class="text-brand-muted text-xs mb-10 uppercase tracking-widest">Connect your causality</p>
             
-            <div class="space-y-4 text-left">
+            <div class="space-y-5 text-left">
                 <div id="reg-name-field" class="hidden">
                     <label class="text-[9px] text-brand-accent font-bold uppercase tracking-widest block mb-1.5 ml-2">Display Name</label>
-                    <input type="text" id="reg-name" class="w-full bg-brand-dark border border-white/10 rounded-2xl py-3 px-5 focus:outline-none focus:border-brand-accent transition-all text-sm" placeholder="お名前">
+                    <input type="text" id="reg-name" class="auth-input w-full rounded-2xl py-3.5 px-6 focus:outline-none focus:ring-2 focus:ring-brand-accent/50 transition-all text-sm font-bold" placeholder="お名前">
                 </div>
                 <div>
                     <label class="text-[9px] text-brand-accent font-bold uppercase tracking-widest block mb-1.5 ml-2">Email Address</label>
-                    <input type="email" id="auth-email" class="w-full bg-brand-dark border border-white/10 rounded-2xl py-3 px-5 focus:outline-none focus:border-brand-accent transition-all text-sm" placeholder="メールアドレス">
+                    <input type="email" id="auth-email" class="auth-input w-full rounded-2xl py-3.5 px-6 focus:outline-none focus:ring-2 focus:ring-brand-accent/50 transition-all text-sm font-bold" placeholder="メールアドレス">
                 </div>
                 <div>
                     <label class="text-[9px] text-brand-accent font-bold uppercase tracking-widest block mb-1.5 ml-2">Password</label>
-                    <input type="password" id="auth-pw" class="w-full bg-brand-dark border border-white/10 rounded-2xl py-3 px-5 focus:outline-none focus:border-brand-accent transition-all text-sm" placeholder="パスワード">
+                    <input type="password" id="auth-pw" class="auth-input w-full rounded-2xl py-3.5 px-6 focus:outline-none focus:ring-2 focus:ring-brand-accent/50 transition-all text-sm font-bold" placeholder="パスワード">
                 </div>
                 <button id="auth-submit-btn" class="w-full bg-brand-accent text-brand-dark font-bold py-4 rounded-2xl hover:scale-[1.02] transition-transform mt-4 shadow-lg shadow-brand-accent/20">ログイン</button>
                 <div class="text-center mt-6">
                     <button id="auth-toggle" class="text-[10px] text-brand-muted hover:text-brand-accent underline underline-offset-4">新しくアカウントを作成する</button>
                 </div>
-                <p id="auth-error" class="text-red-400 text-[10px] text-center mt-4 hidden"></p>
+                <p id="auth-error" class="text-red-400 text-[10px] text-center mt-4 hidden font-bold"></p>
             </div>
         </div>
     </div>
@@ -308,8 +316,8 @@
 
     <script>
         // --- CONFIGURATION ---
-        const GAS_WEBAPP_URL = ""; // 会員登録用GASのURLを入力してください
-        const apiKey = ""; // Gemini API Key
+        const GAS_WEBAPP_URL = ""; 
+        const apiKey = ""; 
         let isVoiceEnabled = true;
 
         const HEALTH_SOURCES = [
@@ -320,7 +328,6 @@
             { id: 'src-5', name: '睡眠ラボ', icon: 'fa-moon', color: 'text-indigo-400' }
         ];
 
-        // --- DATABASE ---
         const DB_NAME = 'SavePointDB_vFinal';
         let db;
         let isRegisterMode = false;
@@ -359,13 +366,12 @@
 
             try {
                 if (!GAS_WEBAPP_URL) {
-                    // モック動作 (GAS未設定時)
                     if (!isRegisterMode && email === "admin@test.com" && password === "1234") {
                         onAuthSuccess({ id: email, name: "管理者" });
                     } else if (isRegisterMode) {
                         alert("登録申請をモックで受け付けました。");
                         location.reload();
-                    } else { throw new Error("認証に失敗しました。"); }
+                    } else { throw new Error("認証に失敗しました。admin@test.com / 1234 をお試しください。"); }
                 } else {
                     const action = isRegisterMode ? 'register' : 'login';
                     const res = await fetch(GAS_WEBAPP_URL, {
@@ -464,7 +470,7 @@
                 assignedSources: assignedSources
             };
             db.transaction(['logs'], 'readwrite').objectStore('logs').put(data);
-            showToast("Saved to Core");
+            showToast("Saved Successfully");
         }
 
         function showToast(msg) {
@@ -481,7 +487,6 @@
         const micBtn = document.getElementById('mic-btn');
         const micIcon = document.getElementById('mic-icon');
 
-        // STT
         const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition;
         if (Recognition) {
@@ -497,7 +502,6 @@
         }
         micBtn.onclick = () => { if(recognition) recognition.start(); };
 
-        // TTS
         async function speak(text) {
             if (!isVoiceEnabled || !apiKey) return;
             document.querySelector('.bot-avatar').classList.add('bot-speaking');
@@ -514,19 +518,14 @@
                 const audioData = result.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
                 if (audioData) {
                     const pcm = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
-                    const wav = pcmToWav(pcm, 24000);
-                    const audio = new Audio(URL.createObjectURL(wav));
+                    const wavHeader = new ArrayBuffer(44);
+                    const view = new DataView(wavHeader);
+                    view.setUint32(0, 0x52494646, false); view.setUint32(4, 36 + pcm.byteLength, true); view.setUint32(8, 0x57415645, false); view.setUint32(12, 0x666d7420, false); view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, 1, true); view.setUint32(24, 24000, true); view.setUint32(28, 24000 * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true); view.setUint32(36, 0x64617461, false); view.setUint32(40, pcm.byteLength, true);
+                    const audio = new Audio(URL.createObjectURL(new Blob([wavHeader, pcm], { type: 'audio/wav' })));
                     audio.onended = () => document.querySelector('.bot-avatar').classList.remove('bot-speaking');
                     audio.play();
                 }
             } catch (err) { document.querySelector('.bot-avatar').classList.remove('bot-speaking'); }
-        }
-
-        function pcmToWav(pcm, rate) {
-            const header = new ArrayBuffer(44);
-            const view = new DataView(header);
-            view.setUint32(0, 0x52494646, false); view.setUint32(4, 36 + pcm.byteLength, true); view.setUint32(8, 0x57415645, false); view.setUint32(12, 0x666d7420, false); view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, 1, true); view.setUint32(24, rate, true); view.setUint32(28, rate * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true); view.setUint32(36, 0x64617461, false); view.setUint32(40, pcm.byteLength, true);
-            return new Blob([header, pcm], { type: 'audio/wav' });
         }
 
         async function handleChat(text) {
@@ -534,11 +533,11 @@
             div.className = "flex justify-end";
             div.innerHTML = `<div class="chat-bubble-user bg-brand-accent/20 text-brand-accent p-4 max-w-[90%] text-brand-text/90 shadow-md">${text}</div>`;
             chatCont.appendChild(div);
-            document.getElementById(fields.evening).value += (document.getElementById(fields.evening).value ? "\n" : "") + `[Save-kun Log] ${text}`;
+            document.getElementById(fields.evening).value += (document.getElementById(fields.evening).value ? "\n" : "") + `[Bot Log] ${text}`;
             chatInput.value = "";
             saveData();
             setTimeout(() => {
-                const rep = "記録しておいたよ！今日のダッシュボードも更新されたからね。";
+                const rep = "記録しておいたよ！ダッシュボードにも反映したからね。";
                 const b = document.createElement('div');
                 b.innerHTML = `<div class="chat-bubble-bot bg-brand-main border border-white/10 p-4 max-w-[90%] text-brand-text/90 shadow-lg">${rep}</div>`;
                 chatCont.appendChild(b); chatCont.scrollTop = chatCont.scrollHeight; speak(rep);
@@ -624,7 +623,7 @@
         document.getElementById('date-picker').onchange = (e) => { currentDate = e.target.value; loadCurrentDate(); };
         document.querySelectorAll('.habit-chip').forEach(c => c.onclick = () => { c.classList.toggle('active'); saveData(); });
         document.querySelectorAll('.mission-item').forEach(m => m.onchange = saveData);
-        Object.values(fields).forEach(id => document.getElementById(id).onblur = saveData);
+        Object.values(fields).forEach(id => { const el = document.getElementById(id); if(el) el.onblur = saveData; });
 
     </script>
 </body>
