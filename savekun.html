@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save Point - 因果をつなぐ日記帳</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-dark: #0a0c10;
+            --brand-main: #14181f;
+            --brand-accent: #c4b5fd;
+            --brand-muted: #94a3b8;
+            --brand-text: #f8fafc;
+        }
+        body { background-color: var(--brand-dark); color: var(--brand-text); font-family: 'Noto Sans JP', sans-serif; overflow-x: hidden; }
+        .font-serif { font-family: 'Noto Serif JP', serif; }
+        .bg-brand-main { background-color: var(--brand-main); }
+        .bg-brand-dark { background-color: var(--brand-dark); }
+        .text-brand-accent { color: var(--brand-accent); }
+        .text-brand-muted { color: var(--brand-muted); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--brand-dark); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+
+        /* Login Overlay */
+        #login-overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            background: var(--brand-dark);
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+        #login-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+        .bot-avatar { animation: float 3s ease-in-out infinite; cursor: pointer; }
+        .bot-eye { animation: blink 4s infinite; }
+        
+        .drop-zone { border: 2px dashed rgba(255,255,255,0.05); min-height: 40px; border-radius: 8px; transition: all 0.3s; }
+        .drop-zone.drag-over { border-color: var(--brand-accent); background: rgba(196, 181, 253, 0.1); }
+        .habit-chip { cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s; }
+        .habit-chip.active { background-color: var(--brand-accent); color: var(--brand-dark); font-weight: bold; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Login/Register Screen -->
+    <div id="login-overlay">
+        <div class="max-w-md w-full p-8 text-center bg-brand-main/50 rounded-[3rem] border border-white/5 backdrop-blur-xl shadow-2xl">
+            <!-- Save-kun at Login -->
+            <div class="bot-avatar relative w-20 h-20 flex items-center justify-center bg-brand-dark rounded-[2rem] border border-brand-accent/30 mx-auto mb-6 shadow-xl shadow-brand-accent/10">
+                <div class="w-10 h-10 flex flex-col items-center justify-center gap-2">
+                    <div class="flex gap-2">
+                        <div class="bot-eye w-1.5 h-1.5 bg-brand-accent rounded-full"></div>
+                        <div class="bot-eye w-1.5 h-1.5 bg-brand-accent rounded-full"></div>
+                    </div>
+                    <div class="w-4 h-1 border-b-2 border-brand-accent/50 rounded-full"></div>
+                </div>
+            </div>
+
+            <h1 class="font-serif text-3xl font-bold mb-2 tracking-tighter text-glow">Save Point</h1>
+            <p id="login-status-msg" class="text-brand-muted text-xs mb-8">おかえり。君の因果を記録しよう。</p>
+            
+            <div class="space-y-4 text-left">
+                <!-- Name Field (Register Only) -->
+                <div id="register-name-field" class="hidden transition-all">
+                    <label class="text-[9px] text-brand-accent font-bold uppercase tracking-widest block mb-1.5 ml-2">Display Name</label>
+                    <input type="text" id="reg-name" class="w-full bg-brand-dark/50 border border-white/10 rounded-2xl py-3 px-5 focus:outline-none focus:border-brand-accent transition-all text-sm" placeholder="表示名（例: ユーザーA）">
+                </div>
+
+                <div>
+                    <label class="text-[9px] text-brand-accent font-bold uppercase tracking-widest block mb-1.5 ml-2">Member ID</label>
+                    <input type="text" id="login-id" class="w-full bg-brand-dark/50 border border-white/10 rounded-2xl py-3 px-5 focus:outline-none focus:border-brand-accent transition-all text-sm" placeholder="IDを入力...">
+                </div>
+                <div>
+                    <label class="text-[9px] text-brand-accent font-bold uppercase tracking-widest block mb-1.5 ml-2">Password</label>
+                    <input type="password" id="login-pw" class="w-full bg-brand-dark/50 border border-white/10 rounded-2xl py-3 px-5 focus:outline-none focus:border-brand-accent transition-all text-sm" placeholder="パスワードを入力...">
+                </div>
+
+                <button id="auth-submit-btn" class="w-full bg-brand-accent text-brand-dark font-bold py-4 rounded-2xl hover:scale-[1.02] transition-transform shadow-lg shadow-brand-accent/10 mt-6">
+                    ログイン
+                </button>
+
+                <div class="text-center mt-6">
+                    <button id="toggle-auth-mode" class="text-[11px] text-brand-muted hover:text-brand-accent transition-colors underline underline-offset-4">
+                        新しくアカウントを作成する
+                    </button>
+                </div>
+
+                <p id="auth-error" class="text-red-400 text-[10px] text-center mt-4 hidden">エラーが発生しました。内容を確認してください。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="border-b border-white/10 bg-brand-main/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-brand-accent rounded flex items-center justify-center text-brand-dark">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                </div>
+                <h1 class="font-serif font-bold text-xl tracking-tighter">Save Point</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="user-display" class="text-[10px] text-brand-accent font-bold bg-brand-accent/10 px-3 py-1 rounded-full hidden">Guest</span>
+                <button id="history-btn" class="text-brand-muted hover:text-brand-accent text-sm flex items-center gap-2 px-2"><i class="fa-solid fa-clock-rotate-left"></i></button>
+                <input type="date" id="date-picker" class="bg-brand-dark border border-white/10 rounded px-2 py-1 text-xs focus:outline-none focus:border-brand-accent">
+                <button id="save-btn" class="bg-brand-accent/10 hover:bg-brand-accent/20 text-brand-accent border border-brand-accent/30 px-4 py-1 rounded text-sm font-bold">セーブ</button>
+                <button id="logout-btn" class="text-brand-muted hover:text-red-400 p-2"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content (Same as before but hidden until login) -->
+    <main id="app-content" class="flex-1 container mx-auto px-4 py-8 blur-xl pointer-events-none transition-all duration-1000">
+        <!-- SAVE-KUN Hero Section -->
+        <div class="max-w-4xl mx-auto mb-12">
+            <div class="bg-brand-main rounded-[2.5rem] p-6 md:p-10 border-2 border-white/5 relative overflow-hidden shadow-2xl">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="flex flex-col items-center shrink-0">
+                        <div class="bot-avatar relative w-24 h-24 flex items-center justify-center bg-brand-dark rounded-[2rem] border border-brand-accent/30">
+                            <div class="w-14 h-14 flex flex-col items-center justify-center gap-2">
+                                <div class="flex gap-3">
+                                    <div class="w-2 h-2 bg-brand-accent rounded-full"></div>
+                                    <div class="w-2 h-2 bg-brand-accent rounded-full"></div>
+                                </div>
+                                <div class="w-6 h-1.5 border-b-2 border-brand-accent/50 rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <h2 class="font-serif text-lg font-bold text-brand-accent tracking-widest uppercase">Save-Kun</h2>
+                        </div>
+                    </div>
+                    <div class="flex-1 w-full min-h-[150px] flex items-center justify-center bg-brand-dark/40 rounded-[2rem] p-6">
+                        <p class="text-sm italic text-brand-muted">「今日の君の因果を、一緒に整理していこう。」</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 Columns Dashboard -->
+        <div class="max-w-7xl mx-auto bg-brand-main rounded-xl border border-white/10 shadow-2xl overflow-hidden mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 min-h-[500px] divide-white/10">
+                <div class="md:col-span-3 p-6 bg-brand-dark/20"><textarea id="field-past" class="w-full h-full bg-transparent border-none focus:ring-0 text-sm font-serif" placeholder="Past..."></textarea></div>
+                <div class="md:col-span-6 p-6"><textarea id="field-morning" class="w-full h-24 bg-transparent border-none focus:ring-0 text-sm mb-4" placeholder="Morning..."></textarea><textarea id="field-afternoon" class="w-full h-24 bg-transparent border-none focus:ring-0 text-sm mb-4" placeholder="Afternoon..."></textarea><textarea id="field-evening" class="w-full h-24 bg-transparent border-none focus:ring-0 text-sm" placeholder="Evening..."></textarea></div>
+                <div class="md:col-span-3 p-6 bg-brand-dark/20"><textarea id="field-future" class="w-full h-full bg-transparent border-none focus:ring-0 text-sm font-serif" placeholder="Future..."></textarea></div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-brand-accent text-brand-dark px-6 py-2 rounded-full font-bold text-xs opacity-0 pointer-events-none transition-opacity z-[100]">Saved</div>
+
+    <script>
+        // --- GAS Configuration ---
+        const GAS_WEBAPP_URL = ""; // 会員登録/ログイン用GASのWebアプリURLを入力
+
+        const DB_NAME = 'SavePointDB_v4';
+        let db;
+        let isRegisterMode = false;
+
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onsuccess = (e) => { db = e.target.result; checkLoginState(); };
+        request.onupgradeneeded = (e) => { e.target.result.createObjectStore('logs', { keyPath: 'date' }); };
+
+        // --- Auth UI Toggle ---
+        const toggleBtn = document.getElementById('toggle-auth-mode');
+        const nameField = document.getElementById('register-name-field');
+        const submitBtn = document.getElementById('auth-submit-btn');
+        const statusMsg = document.getElementById('login-status-msg');
+
+        toggleBtn.onclick = () => {
+            isRegisterMode = !isRegisterMode;
+            nameField.classList.toggle('hidden');
+            submitBtn.innerText = isRegisterMode ? "アカウントを作成" : "ログイン";
+            statusMsg.innerText = isRegisterMode ? "はじめまして。新しく登録しましょう。" : "おかえり。君の因果を記録しよう。";
+            toggleBtn.innerText = isRegisterMode ? "既にアカウントをお持ちの方" : "新しくアカウントを作成する";
+        };
+
+        // --- Auth Execution ---
+        submitBtn.onclick = async () => {
+            const id = document.getElementById('login-id').value;
+            const pw = document.getElementById('login-pw').value;
+            const name = document.getElementById('reg-name').value;
+            const errorEl = document.getElementById('auth-error');
+
+            if (!id || !pw || (isRegisterMode && !name)) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "通信中...";
+
+            try {
+                if (!GAS_WEBAPP_URL) {
+                    // Mock for testing
+                    if (!isRegisterMode && id === "admin" && pw === "1234") {
+                        onAuthSuccess({ id, name: "管理者" });
+                    } else if (isRegisterMode) {
+                        onAuthSuccess({ id, name });
+                    } else { throw new Error(); }
+                } else {
+                    const action = isRegisterMode ? 'register' : 'login';
+                    const payload = { action, id, pw, name };
+                    
+                    const response = await fetch(GAS_WEBAPP_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        onAuthSuccess(result.user);
+                    } else {
+                        throw new Error(result.message || "Auth failed");
+                    }
+                }
+            } catch (err) {
+                errorEl.innerText = isRegisterMode ? "登録に失敗しました（ID重複など）" : "IDまたはパスワードが違います";
+                errorEl.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitBtn.innerText = isRegisterMode ? "アカウントを作成" : "ログイン";
+            }
+        };
+
+        function onAuthSuccess(user) {
+            sessionStorage.setItem('savepoint_user', JSON.stringify(user));
+            document.getElementById('login-overlay').classList.add('hidden');
+            document.getElementById('app-content').classList.remove('blur-xl', 'pointer-events-none');
+            document.getElementById('user-display').innerText = user.name;
+            document.getElementById('user-display').classList.remove('hidden');
+            loadCurrentDate();
+        }
+
+        function checkLoginState() {
+            const saved = sessionStorage.getItem('savepoint_user');
+            if (saved) onAuthSuccess(JSON.parse(saved));
+        }
+
+        document.getElementById('logout-btn').onclick = () => { sessionStorage.removeItem('savepoint_user'); location.reload(); };
+
+        // --- Diary Logic ---
+        let currentDate = new Date().toISOString().split('T')[0];
+        const fields = { past: document.getElementById('field-past'), morning: document.getElementById('field-morning'), afternoon: document.getElementById('field-afternoon'), evening: document.getElementById('field-evening'), future: document.getElementById('field-future') };
+
+        function loadCurrentDate() {
+            document.getElementById('date-picker').value = currentDate;
+            db.transaction(['logs'], 'readonly').objectStore('logs').get(currentDate).onsuccess = (e) => {
+                const data = e.target.result || {};
+                Object.keys(fields).forEach(k => fields[k].value = data[k] || "");
+            };
+        }
+
+        document.getElementById('save-btn').onclick = () => {
+            const data = { date: currentDate, ...Object.keys(fields).reduce((a, k) => ({ ...a, [k]: fields[k].value }), {}) };
+            db.transaction(['logs'], 'readwrite').objectStore('logs').put(data);
+            const t = document.getElementById('toast'); t.classList.remove('opacity-0'); setTimeout(() => t.classList.add('opacity-0'), 2000);
+        };
+
+        document.getElementById('date-picker').onchange = (e) => { currentDate = e.target.value; loadCurrentDate(); };
+    </script>
+</body>
+</html>
