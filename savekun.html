@@ -81,7 +81,7 @@
                 </div>
             </div>
             <h1 class="font-serif text-3xl font-bold mb-1 tracking-tighter">Save Point</h1>
-            <p id="auth-sub-msg" class="text-brand-muted text-[10px] mb-8 uppercase tracking-widest font-bold">Clinical Connector</p>
+            <p id="auth-sub-msg" class="text-brand-muted text-[10px] mb-8 uppercase tracking-widest font-bold">Health Connector</p>
             <div class="space-y-4 text-left">
                 <div id="reg-name-field" class="hidden">
                     <label class="text-[9px] text-brand-accent font-bold uppercase tracking-widest block mb-1.5 ml-2">Display Name</label>
@@ -95,13 +95,12 @@
                 <div class="text-center mt-4">
                     <button id="auth-toggle" class="text-[10px] text-brand-muted hover:text-brand-accent underline underline-offset-4">アカウント作成はこちら</button>
                 </div>
-                <!-- 詳細なエラー表示 -->
                 <div id="auth-error" class="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-400 text-[10px] mt-4 hidden font-bold leading-relaxed whitespace-pre-wrap"></div>
             </div>
         </div>
     </div>
 
-    <!-- Edit Modal (Mobile Focused UI) -->
+    <!-- Edit Modal (Mobile System) -->
     <div id="edit-modal" class="modal-overlay hidden">
         <div class="max-w-xl w-full h-[85vh] m-4 p-8 flex flex-col bg-brand-main rounded-[2.5rem] border border-brand-accent/20 shadow-2xl relative">
             <button id="close-modal" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-brand-dark text-brand-muted hover:text-white transition-colors"><i class="fa-solid fa-xmark"></i></button>
@@ -184,52 +183,30 @@
             </div>
         </div>
 
-        <!-- MOBILE VIEW Dashboard Icons (PC版配置のメタ化) -->
+        <!-- MOBILE VIEW Dashboard Icons -->
         <div class="md:hidden max-w-sm mx-auto mb-10 px-4">
             <h2 id="display-date-mobile" class="text-center font-serif text-xl font-bold text-brand-accent mb-10 tracking-[0.2em]">202X.XX.XX</h2>
             <div class="mobile-meta-grid">
-                <!-- LEFT: PAST -->
                 <div class="flex flex-col gap-4">
-                    <button onclick="openEditModal('past')" class="meta-icon-box" id="btn-past">
-                        <i class="fa-solid fa-history text-brand-muted/50 text-2xl transition-colors"></i>
-                        <span class="text-[8px] mt-2 font-bold uppercase tracking-widest">Past</span>
-                    </button>
+                    <button onclick="openEditModal('past')" class="meta-icon-box" id="btn-past"><i class="fa-solid fa-history text-brand-muted/50 text-2xl transition-colors"></i><span class="text-[8px] mt-2 font-bold uppercase tracking-widest">Past</span></button>
                 </div>
-                <!-- CENTER: TODAY'S GRID -->
                 <div class="grid grid-cols-2 gap-4">
-                    <button onclick="openEditModal('habits-text')" class="meta-icon-box col-span-2 aspect-auto py-5" id="btn-habits-text">
-                        <i class="fa-solid fa-person-rays text-brand-accent/40 text-xl transition-colors"></i>
-                        <span class="text-[9px] mt-1 font-bold uppercase tracking-widest">Habits</span>
-                    </button>
-                    <button onclick="openEditModal('morning')" class="meta-icon-box" id="btn-morning">
-                        <i class="fa-regular fa-sun text-brand-muted/50 text-2xl transition-colors"></i>
-                        <span class="text-[8px] mt-2 font-bold uppercase tracking-widest">AM</span>
-                    </button>
-                    <button onclick="openEditModal('afternoon')" class="meta-icon-box" id="btn-afternoon">
-                        <i class="fa-solid fa-sun text-brand-muted/50 text-2xl transition-colors"></i>
-                        <span class="text-[8px] mt-2 font-bold uppercase tracking-widest">Day</span>
-                    </button>
-                    <button onclick="openEditModal('evening')" class="meta-icon-box col-span-2 aspect-auto py-5" id="btn-evening">
-                        <i class="fa-solid fa-moon text-brand-muted/50 text-2xl transition-colors"></i>
-                        <span class="text-[8px] mt-1 font-bold uppercase tracking-widest">Evening</span>
-                    </button>
+                    <button onclick="openEditModal('habits-text')" class="meta-icon-box col-span-2 aspect-auto py-5" id="btn-habits-text"><i class="fa-solid fa-person-rays text-brand-accent/40 text-xl transition-colors"></i><span class="text-[9px] mt-1 font-bold uppercase tracking-widest">Habits</span></button>
+                    <button onclick="openEditModal('morning')" class="meta-icon-box" id="btn-morning"><i class="fa-regular fa-sun text-brand-muted/50 text-2xl transition-colors"></i><span class="text-[8px] mt-2 font-bold uppercase tracking-widest">AM</span></button>
+                    <button onclick="openEditModal('afternoon')" class="meta-icon-box" id="btn-afternoon"><i class="fa-solid fa-sun text-brand-muted/50 text-2xl transition-colors"></i><span class="text-[8px] mt-2 font-bold uppercase tracking-widest">Day</span></button>
+                    <button onclick="openEditModal('evening')" class="meta-icon-box col-span-2 aspect-auto py-5" id="btn-evening"><i class="fa-solid fa-moon text-brand-muted/50 text-2xl transition-colors"></i><span class="text-[8px] mt-1 font-bold uppercase tracking-widest">Evening</span></button>
                 </div>
-                <!-- RIGHT: FUTURE -->
                 <div class="flex flex-col gap-4">
-                    <button onclick="openEditModal('future')" class="meta-icon-box" id="btn-future">
-                        <i class="fa-solid fa-paper-plane text-brand-muted/50 text-2xl transition-colors"></i>
-                        <span class="text-[8px] mt-2 font-bold uppercase tracking-widest">Next</span>
-                    </button>
+                    <button onclick="openEditModal('future')" class="meta-icon-box" id="btn-future"><i class="fa-solid fa-paper-plane text-brand-muted/50 text-2xl transition-colors"></i><span class="text-[8px] mt-2 font-bold uppercase tracking-widest">Next</span></button>
                 </div>
             </div>
-            <p class="text-center text-[8px] text-brand-muted/50 mt-12 uppercase tracking-[0.5em]">System Cockpit Active</p>
         </div>
 
         <!-- Clinical, Photos, Meds, Tarot -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto pb-20">
              <div class="bg-brand-main rounded-[2.5rem] p-8 border border-white/5 flex flex-col shadow-xl">
                  <h4 class="font-serif text-sm font-bold mb-4 flex items-center gap-3"><i class="fa-solid fa-hospital text-blue-400"></i> 通院記録</h4>
-                 <input type="text" id="clinic-name" class="clinic-input mb-3" placeholder="病院名">
+                 <input type="text" id="clinic-name" class="clinic-input mb-3 font-bold" placeholder="病院名">
                  <textarea id="clinic-memo" class="bg-brand-dark/30 border border-white/5 rounded-xl p-3 text-[10px] w-full h-32 focus:outline-none focus:border-brand-accent/30" placeholder="診断・指示..."></textarea>
              </div>
              <div class="bg-brand-main rounded-[2.5rem] p-8 border border-white/5 flex flex-col shadow-xl">
@@ -259,7 +236,7 @@
         </div>
     </main>
 
-    <!-- UI Overlays -->
+    <!-- Sidebars & Toast -->
     <div id="history-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity"></div>
     <div id="history-sidebar" class="fixed top-0 right-0 h-full w-full max-w-sm bg-brand-main border-l border-white/10 z-[70] p-10 shadow-2xl flex flex-col translate-x-full transition-transform">
         <h2 class="font-serif text-2xl font-bold text-brand-accent mb-8 text-center tracking-widest uppercase">Saved Logs</h2>
@@ -269,8 +246,8 @@
     <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-brand-accent text-brand-dark px-8 py-3 rounded-full font-bold text-xs opacity-0 pointer-events-none transition-opacity shadow-2xl z-[100] tracking-widest uppercase">System Recorded</div>
 
     <script>
-        // --- IMPORTANT: GAS Web App URL here ---
-        const GAS_WEBAPP_URL = ""; 
+        // --- GAS Web App URL ---
+        const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbysQ9Hvxt9vOSDoVqGx1ubKPFDbmc36zIQ_SuVS2s7patF4N18klIZygvizwFcY1l95ww/exec"; 
 
         const DB_NAME = 'SavePointDB_vMobileUI';
         let db;
@@ -309,34 +286,24 @@
             authError.classList.add('hidden');
 
             try {
-                if (!GAS_WEBAPP_URL) {
-                    // Mock Testing
-                    if (!isRegisterMode && email === "admin@test.com" && password === "1234") {
-                        onAuthSuccess({ id: email, name: "管理者" });
-                    } else if (isRegisterMode) {
-                        alert("登録申請を受け付けました（モック動作）");
-                        location.reload();
-                    } else { throw new Error("GASのURLが設定されていません。\nadmin@test.com / 1234 でテストログイン可能です。"); }
+                const action = isRegisterMode ? 'register' : 'login';
+                const res = await fetch(GAS_WEBAPP_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({ action, email, password, name })
+                });
+                
+                if (!res.ok) throw new Error(`サーバーエラー (Status: ${res.status})\nURLとデプロイ設定を確認してください。`);
+                
+                const result = await res.json();
+                if (result.success && !isRegisterMode) {
+                    onAuthSuccess(result.user);
+                } else if (result.success && isRegisterMode) {
+                    alert(result.message || "登録申請完了！承認をお待ちください。");
+                    location.reload();
                 } else {
-                    const action = isRegisterMode ? 'register' : 'login';
-                    const res = await fetch(GAS_WEBAPP_URL, {
-                        method: 'POST',
-                        mode: 'cors',
-                        headers: { 'Content-Type': 'text/plain' },
-                        body: JSON.stringify({ action, email, password, name })
-                    });
-                    
-                    if (!res.ok) throw new Error(`サーバーエラー (Status: ${res.status})\nURLとデプロイ設定を確認してください。`);
-                    
-                    const result = await res.json();
-                    if (result.success && !isRegisterMode) {
-                        onAuthSuccess(result.user);
-                    } else if (result.success && isRegisterMode) {
-                        alert(result.message || "登録申請完了！承認をお待ちください。");
-                        location.reload();
-                    } else {
-                        throw new Error(result.message || "認証に失敗しました。詳細不明。");
-                    }
+                    throw new Error(result.message || "認証に失敗しました。詳細不明。");
                 }
             } catch (err) {
                 showAuthError(err.message);
@@ -354,6 +321,8 @@
             sessionStorage.setItem('savepoint_user', JSON.stringify(user));
             document.getElementById('auth-overlay').classList.add('hidden');
             document.getElementById('app-content').classList.remove('blur-2xl', 'pointer-events-none');
+            document.getElementById('user-display').innerText = user.name;
+            document.getElementById('user-display').classList.remove('hidden');
             loadCurrentDate();
         }
 
@@ -373,28 +342,38 @@
             'afternoon': { title: 'Afternoon Log', icon: 'fa-solid fa-sun', desc: '昼間の活動・癖・気候の変化' },
             'evening': { title: 'Evening Log', icon: 'fa-solid fa-moon', desc: '一日の振り返り・違和感の正体' },
             'future': { title: 'Strategy - Future', icon: 'fa-solid fa-paper-plane', desc: '明日への対策・実験・予定' },
-            'habits-text': { title: 'Habits Tracker', icon: 'fa-solid fa-person-rays', desc: '無意識にとっている自分の癖や習慣' }
+            'habits-text': { title: 'Habits Tracker', icon: 'fa-solid fa-person-rays', desc: '今日気づいた自分の癖や習慣' }
         };
 
         function loadCurrentDate() {
             document.getElementById('date-picker').value = currentDate;
             const dateStr = new Date(currentDate).toLocaleDateString('ja-JP', { year:'numeric', month:'long', day:'numeric', weekday:'short' });
-            const pDates = ['display-date-mobile']; // PC版はID重複を避ける
-            pDates.forEach(id => { const el = document.getElementById(id); if(el) el.innerText = dateStr; });
+            const mobileDateEl = document.getElementById('display-date-mobile');
+            const pcDateEl = document.getElementById('display-date');
+            if(mobileDateEl) mobileDateEl.innerText = dateStr;
+            if(pcDateEl) pcDateEl.innerText = dateStr;
             
             db.transaction(['logs'], 'readonly').objectStore('logs').get(currentDate).onsuccess = (e) => {
                 const d = e.target.result || {};
                 fieldIds.forEach(id => {
                     const key = id.split('-')[1];
-                    const val = d[key] || "";
+                    const val = (key === 'habits-text') ? (d['habits-text'] || d['habits'] || "") : (d[key] || "");
                     const el = document.getElementById(id);
                     if (el) el.value = val;
-                    // Mobile Meta Logic
+                    // Mobile Meta Indicator
                     const btn = document.getElementById(`btn-${key}`);
                     if (btn) {
                         btn.classList.toggle('active', val.length > 0);
                         const icon = btn.querySelector('i');
-                        if (icon) icon.className = icon.className.replace('text-brand-muted/50', 'text-brand-accent');
+                        if (icon) {
+                            if(val.length > 0) {
+                                icon.classList.remove('text-brand-muted/50');
+                                icon.classList.add('text-brand-accent');
+                            } else {
+                                icon.classList.add('text-brand-muted/50');
+                                icon.classList.remove('text-brand-accent');
+                            }
+                        }
                     }
                 });
                 renderMedicine(d.medicines || []);
@@ -439,15 +418,15 @@
 
         document.getElementById('close-modal').onclick = () => modal.classList.add('hidden');
 
-        // --- BOT & INTERACTION ---
+        // --- INTERACTION ---
         async function handleChat(text) {
             const cont = document.getElementById('chat-container');
             const u = document.createElement('div'); u.className="flex justify-end"; u.innerHTML=`<div class="chat-bubble-user bg-brand-accent/20 text-brand-accent p-3 text-[10px] shadow-sm max-w-[85%]">${text}</div>`;
             cont.appendChild(u);
-            document.getElementById('field-evening').value += (document.getElementById('field-evening').value ? "\n" : "") + `[Saved with Save-kun] ${text}`;
+            document.getElementById('field-evening').value += (document.getElementById('field-evening').value ? "\n" : "") + `[SAVE-KUN] ${text}`;
             saveData();
             setTimeout(() => {
-                const rep = "記録完了！ダッシュボードに反映したよ。他にもある？";
+                const rep = "了解！記録しておいたよ。";
                 const b = document.createElement('div'); b.innerHTML=`<div class="chat-bubble-bot bg-brand-main border border-white/10 p-3 text-brand-text/90 shadow-sm max-w-[85%] leading-relaxed">${rep}</div>`;
                 cont.appendChild(b); cont.scrollTop = cont.scrollHeight;
             }, 800);
@@ -455,7 +434,6 @@
         }
         document.getElementById('send-chat').onclick = () => { const t = document.getElementById('chat-input').value.trim(); if(t) handleChat(t); };
 
-        // --- ADDITIONAL FEATURES ---
         function renderMedicine(meds) {
             document.getElementById('medicine-list').innerHTML = meds.map(m => `<div class="med-item flex items-center justify-between p-3 rounded-xl border border-white/5 bg-brand-dark/40 ${m.taken?'taken opacity-40 grayscale':''}" data-name="${m.name}"><span class="text-[10px] font-bold text-brand-accent">${m.name}</span><button class="text-[8px] border border-white/20 px-3 py-1 rounded-full transition-all ${m.taken?'bg-brand-accent text-brand-dark border-brand-accent':'border-white/20 hover:border-brand-accent'}" onclick="this.parentElement.classList.toggle('taken');saveData();">${m.taken?'済':'服用'}</button></div>`).join('');
         }
@@ -470,11 +448,7 @@
 
         document.getElementById('tarot-card').onclick = function() {
             if(this.classList.contains('card-flipped')) return;
-            const c = [
-                {n:"運命の輪",i:"fa-dharmachakra",d:"変化の時。君の決断が未来を作る。"},
-                {n:"星",i:"fa-star",d:"静かな希望。些細な習慣が光を照らす。"},
-                {n:"太陽",i:"fa-sun",d:"明快な成功。君のエネルギーは正しい方向へ向かっている。"}
-            ]; 
+            const c = [{n:"運命の輪",i:"fa-dharmachakra",d:"好転の兆し。"}, {n:"星",i:"fa-star",d:"希望の光。"}]; 
             const r = c[Math.floor(Math.random()*c.length)];
             document.getElementById('tarot-icon').className = `fa-solid ${r.i} text-brand-accent text-3xl mb-2`;
             document.getElementById('tarot-name').innerText = r.n;
@@ -482,7 +456,6 @@
             this.classList.add('card-flipped');
         };
 
-        // --- HISTORY PORTAL ---
         document.getElementById('history-btn').onclick = () => {
             const side = document.getElementById('history-sidebar'); side.classList.remove('translate-x-full');
             document.getElementById('history-overlay').classList.remove('opacity-0', 'pointer-events-none');
@@ -493,10 +466,8 @@
         document.getElementById('close-history').onclick = () => { document.getElementById('history-sidebar').classList.add('translate-x-full'); document.getElementById('history-overlay').classList.add('opacity-0', 'pointer-events-none'); };
         document.getElementById('history-overlay').onclick = document.getElementById('close-history').onclick;
 
-        // Save & Sync
         document.getElementById('date-picker').onchange = (e) => { currentDate = e.target.value; loadCurrentDate(); };
         fieldIds.forEach(id => { const el = document.getElementById(id); if(el) el.onblur = saveData; });
-
     </script>
 </body>
 </html>
