@@ -29,7 +29,7 @@
         #auth-overlay, .modal-overlay { position: fixed; inset: 0; z-index: 9999; background: var(--brand-dark); display: flex; align-items: center; justify-content: center; transition: opacity 0.5s, visibility 0.5s; }
         #auth-overlay.hidden, .modal-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-        /* Input specific for Auth with Black text */
+        /* Auth Input: Text is BLACK for visibility */
         .auth-input, .modal-input { 
             background-color: rgba(255, 255, 255, 0.95) !important; 
             color: #000000 !important; 
@@ -49,8 +49,6 @@
         .chat-bubble-user { border-radius: 20px 20px 4px 20px; }
         
         .drop-zone { border: 2px dashed rgba(255,255,255,0.05); min-height: 50px; border-radius: 12px; transition: all 0.3s; display: flex; flex-wrap: wrap; gap: 8px; padding: 8px; align-items: center; }
-        .drop-zone.drag-over { border-color: var(--brand-accent); background: rgba(196, 181, 253, 0.1); }
-        
         .habit-chip { cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s; font-size: 10px; padding: 4px 8px; border-radius: 99px; }
         .habit-chip.active { background-color: var(--brand-accent); color: var(--brand-dark); font-weight: bold; border-color: var(--brand-accent); }
         
@@ -63,34 +61,12 @@
         .card-back { transform: rotateY(180deg); }
 
         /* Meta Dashboard for Mobile */
-        .mobile-meta-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            gap: 1rem;
-            align-items: center;
-        }
-        .meta-icon-box {
-            background: rgba(20, 24, 31, 0.8);
-            border: 1px solid rgba(196, 181, 253, 0.1);
-            border-radius: 1.5rem;
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        .meta-icon-box.active {
-            border-color: var(--brand-accent);
-            box-shadow: 0 0 15px rgba(196, 181, 253, 0.15);
-        }
+        .mobile-meta-grid { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 1rem; align-items: center; }
+        .meta-icon-box { background: rgba(20, 24, 31, 0.8); border: 1px solid rgba(196, 181, 253, 0.1); border-radius: 1.5rem; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .meta-icon-box.active { border-color: var(--brand-accent); box-shadow: 0 0 15px rgba(196, 181, 253, 0.15); }
         .meta-icon-box:active { transform: scale(0.95); }
 
-        .habit-textarea {
-            background-color: rgba(20, 24, 31, 0.6);
-            border: 1px solid rgba(196, 181, 253, 0.2);
-            transition: all 0.3s;
-        }
+        .habit-textarea { background-color: rgba(20, 24, 31, 0.6); border: 1px solid rgba(196, 181, 253, 0.2); transition: all 0.3s; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -105,29 +81,39 @@
                 </div>
             </div>
             <h1 class="font-serif text-3xl font-bold mb-1 tracking-tighter">Save Point</h1>
-            <p id="auth-sub-msg" class="text-brand-muted text-[10px] mb-8 uppercase tracking-widest font-bold">Health Connector</p>
+            <p id="auth-sub-msg" class="text-brand-muted text-[10px] mb-8 uppercase tracking-widest font-bold">Clinical Connector</p>
             <div class="space-y-4 text-left">
-                <div id="reg-name-field" class="hidden"><input type="text" id="reg-name" class="auth-input w-full rounded-2xl py-3.5 px-6 focus:outline-none text-sm font-bold" placeholder="お名前"></div>
+                <div id="reg-name-field" class="hidden">
+                    <label class="text-[9px] text-brand-accent font-bold uppercase tracking-widest block mb-1.5 ml-2">Display Name</label>
+                    <input type="text" id="reg-name" class="auth-input w-full rounded-2xl py-3.5 px-6 focus:outline-none text-sm font-bold" placeholder="お名前">
+                </div>
+                <label class="text-[9px] text-brand-accent font-bold uppercase tracking-widest block mb-[-8px] ml-2">Email</label>
                 <input type="email" id="auth-email" class="auth-input w-full rounded-2xl py-3.5 px-6 focus:outline-none text-sm font-bold" placeholder="メールアドレス">
+                <label class="text-[9px] text-brand-accent font-bold uppercase tracking-widest block mb-[-8px] ml-2">Password</label>
                 <input type="password" id="auth-pw" class="auth-input w-full rounded-2xl py-3.5 px-6 focus:outline-none text-sm font-bold" placeholder="パスワード">
                 <button id="auth-submit-btn" class="w-full bg-brand-accent text-brand-dark font-bold py-4 rounded-2xl hover:scale-[1.02] transition-transform mt-2 shadow-lg shadow-brand-accent/20">ログイン</button>
-                <div class="text-center mt-4"><button id="auth-toggle" class="text-[10px] text-brand-muted hover:text-brand-accent underline underline-offset-4">アカウント作成</button></div>
-                <div id="auth-error" class="bg-red-500/10 border border-red-500/20 rounded-xl p-3 text-red-400 text-[10px] mt-4 hidden font-bold"></div>
+                <div class="text-center mt-4">
+                    <button id="auth-toggle" class="text-[10px] text-brand-muted hover:text-brand-accent underline underline-offset-4">アカウント作成はこちら</button>
+                </div>
+                <!-- 詳細なエラー表示 -->
+                <div id="auth-error" class="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-400 text-[10px] mt-4 hidden font-bold leading-relaxed whitespace-pre-wrap"></div>
             </div>
         </div>
     </div>
 
-    <!-- Edit Modal (Mobile Only) -->
+    <!-- Edit Modal (Mobile Focused UI) -->
     <div id="edit-modal" class="modal-overlay hidden">
-        <div class="max-w-xl w-full h-[80vh] m-4 p-8 flex flex-col bg-brand-main rounded-[2.5rem] border border-brand-accent/20 shadow-2xl relative">
-            <button id="close-modal" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-brand-dark text-brand-muted hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        <div class="max-w-xl w-full h-[85vh] m-4 p-8 flex flex-col bg-brand-main rounded-[2.5rem] border border-brand-accent/20 shadow-2xl relative">
+            <button id="close-modal" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-brand-dark text-brand-muted hover:text-white transition-colors"><i class="fa-solid fa-xmark"></i></button>
             <div class="mb-6 flex items-center gap-3">
-                <i id="modal-icon" class="text-brand-accent text-xl"></i>
+                <div class="w-10 h-10 rounded-xl bg-brand-accent/10 flex items-center justify-center">
+                    <i id="modal-icon" class="text-brand-accent text-xl"></i>
+                </div>
                 <h2 id="modal-title" class="font-serif text-xl font-bold text-brand-accent tracking-widest uppercase">Field</h2>
             </div>
-            <p id="modal-description" class="text-[10px] text-brand-muted mb-4 uppercase tracking-wider font-bold"></p>
-            <textarea id="modal-textarea" class="flex-1 modal-input w-full rounded-3xl p-6 text-base focus:outline-none focus:ring-2 focus:ring-brand-accent/30 transition-all font-serif leading-relaxed" placeholder="ここに入力..."></textarea>
-            <button id="modal-save-btn" class="mt-6 w-full bg-brand-accent text-brand-dark font-bold py-4 rounded-2xl shadow-lg">変更をセーブ</button>
+            <p id="modal-description" class="text-[10px] text-brand-muted mb-4 uppercase tracking-widest font-bold border-b border-white/5 pb-2"></p>
+            <textarea id="modal-textarea" class="flex-1 modal-input w-full rounded-3xl p-6 text-base focus:outline-none focus:ring-4 focus:ring-brand-accent/10 transition-all font-serif leading-relaxed" placeholder="君の気づきをここに..."></textarea>
+            <button id="modal-save-btn" class="mt-6 w-full bg-brand-accent text-brand-dark font-bold py-4 rounded-2xl shadow-xl hover:bg-white transition-colors uppercase tracking-widest">Update Save Point</button>
         </div>
     </div>
 
@@ -140,7 +126,7 @@
             </div>
             <div class="flex items-center gap-2 md:gap-4">
                 <button id="history-btn" class="text-brand-muted hover:text-brand-accent px-2"><i class="fa-solid fa-clock-rotate-left"></i></button>
-                <input type="date" id="date-picker" class="bg-brand-dark border border-white/10 rounded px-2 py-1 text-xs focus:outline-none focus:border-brand-accent">
+                <input type="date" id="date-picker" class="bg-brand-dark border border-white/10 rounded px-2 py-1 text-xs focus:outline-none focus:border-brand-accent text-brand-accent">
                 <button id="logout-btn" class="text-brand-muted hover:text-red-400 p-2"><i class="fa-solid fa-right-from-bracket"></i></button>
             </div>
         </div>
@@ -148,10 +134,10 @@
 
     <main id="app-content" class="flex-1 container mx-auto px-4 py-8 blur-2xl pointer-events-none transition-all duration-1000">
         
-        <!-- SAVE-KUN Hero Section -->
+        <!-- SAVE-KUN Interaction Hero -->
         <div class="max-w-4xl mx-auto mb-10">
             <div class="bg-brand-main rounded-[2.5rem] p-6 md:p-10 border-2 border-white/5 relative overflow-hidden shadow-2xl">
-                <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left">
+                <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10">
                     <div id="savekun-avatar" class="bot-avatar relative w-24 h-24 flex items-center justify-center bg-brand-dark rounded-[2.5rem] border border-brand-accent/30 shadow-2xl shrink-0">
                         <div class="w-14 h-14 flex flex-col items-center justify-center gap-2">
                             <div class="flex gap-3"><div class="bot-eye w-2 h-2 bg-brand-accent rounded-full"></div><div class="bot-eye w-2 h-2 bg-brand-accent rounded-full"></div></div>
@@ -162,23 +148,23 @@
                     <div class="flex-1 flex flex-col min-h-[120px] w-full">
                         <div id="chat-container" class="flex-1 bg-brand-dark/40 rounded-[2rem] p-5 overflow-y-auto mb-4 text-xs space-y-3 max-h-[140px]">
                             <div class="chat-bubble-bot bg-brand-main border border-white/10 p-3 text-brand-text/90 shadow-sm leading-relaxed">
-                                やあ！君の「因果」を記録しよう。アイコンをタップして記入するか、ここに話しかけてね。
+                                やあ！ログインお疲れ様。アイコンをタップして今の状態を教えてくれるかな？
                             </div>
                         </div>
                         <div class="relative flex items-center gap-2">
-                            <input type="text" id="chat-input" class="flex-1 bg-brand-dark border border-white/10 rounded-full py-3 px-5 text-xs focus:outline-none focus:border-brand-accent/40 transition-all" placeholder="話しかける...">
-                            <button id="send-chat" class="w-10 h-10 bg-brand-accent/10 text-brand-accent rounded-full flex items-center justify-center"><i class="fa-solid fa-paper-plane"></i></button>
+                            <input type="text" id="chat-input" class="flex-1 bg-brand-dark border border-white/10 rounded-full py-3 px-5 text-xs focus:outline-none focus:border-brand-accent/40 transition-all" placeholder="SAVE-KUNに話しかける...">
+                            <button id="send-chat" class="w-10 h-10 bg-brand-accent/10 text-brand-accent rounded-full flex items-center justify-center hover:scale-110 transition-transform"><i class="fa-solid fa-paper-plane"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- PC VIEW: 3 Columns (hidden on small screens) -->
+        <!-- PC VIEW Dashboard -->
         <div class="hidden md:grid max-w-7xl mx-auto bg-brand-main rounded-2xl border border-white/10 shadow-2xl overflow-hidden mb-12 grid-cols-12 min-h-[600px] divide-x divide-white/10">
             <div class="col-span-3 bg-brand-dark/20 p-8 flex flex-col">
                 <h3 class="font-serif text-sm font-bold tracking-widest uppercase text-brand-muted mb-6"><i class="fa-solid fa-history mr-2"></i>Past</h3>
-                <textarea id="field-past" class="flex-1 bg-transparent border-none focus:ring-0 text-sm font-serif leading-loose resize-none" placeholder="過去の要因..."></textarea>
+                <textarea id="field-past" class="flex-1 bg-transparent border-none focus:ring-0 text-sm font-serif leading-loose resize-none text-brand-text/80" placeholder="過去の要因..."></textarea>
             </div>
             <div class="col-span-6 flex flex-col">
                 <div class="p-4 border-b border-white/10 bg-brand-accent/5 flex items-center justify-between px-8 font-serif font-bold text-brand-accent uppercase tracking-widest text-sm">Dashboard</div>
@@ -194,93 +180,98 @@
             </div>
             <div class="col-span-3 bg-brand-dark/20 p-8 flex flex-col">
                 <h3 class="font-serif text-sm font-bold tracking-widest uppercase text-brand-muted mb-6"><i class="fa-solid fa-paper-plane mr-2 text-xs"></i>Future</h3>
-                <textarea id="field-future" class="flex-1 bg-transparent border-none focus:ring-0 text-sm font-serif leading-loose resize-none" placeholder="明日への対策..."></textarea>
+                <textarea id="field-future" class="flex-1 bg-transparent border-none focus:ring-0 text-sm font-serif leading-loose resize-none text-brand-text/80" placeholder="明日への対策..."></textarea>
             </div>
         </div>
 
-        <!-- MOBILE VIEW: Meta Dashboard Icons (shown only on small screens) -->
-        <div class="md:hidden max-w-sm mx-auto mb-10">
-            <h2 id="display-date-mobile" class="text-center font-serif text-lg font-bold text-brand-accent mb-6 tracking-widest">202X.XX.XX</h2>
+        <!-- MOBILE VIEW Dashboard Icons (PC版配置のメタ化) -->
+        <div class="md:hidden max-w-sm mx-auto mb-10 px-4">
+            <h2 id="display-date-mobile" class="text-center font-serif text-xl font-bold text-brand-accent mb-10 tracking-[0.2em]">202X.XX.XX</h2>
             <div class="mobile-meta-grid">
-                <!-- PAST SIDE -->
+                <!-- LEFT: PAST -->
                 <div class="flex flex-col gap-4">
                     <button onclick="openEditModal('past')" class="meta-icon-box" id="btn-past">
-                        <i class="fa-solid fa-history text-brand-muted/50 text-xl"></i>
-                        <span class="text-[8px] mt-2 font-bold uppercase">Past</span>
+                        <i class="fa-solid fa-history text-brand-muted/50 text-2xl transition-colors"></i>
+                        <span class="text-[8px] mt-2 font-bold uppercase tracking-widest">Past</span>
                     </button>
                 </div>
-                <!-- TODAY CENTER (Grid 2x2) -->
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="openEditModal('habits-text')" class="meta-icon-box col-span-2 aspect-auto py-4" id="btn-habits-text">
-                        <i class="fa-solid fa-person-rays text-brand-accent/40 text-lg"></i>
-                        <span class="text-[9px] mt-1 font-bold uppercase">Habits</span>
+                <!-- CENTER: TODAY'S GRID -->
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="openEditModal('habits-text')" class="meta-icon-box col-span-2 aspect-auto py-5" id="btn-habits-text">
+                        <i class="fa-solid fa-person-rays text-brand-accent/40 text-xl transition-colors"></i>
+                        <span class="text-[9px] mt-1 font-bold uppercase tracking-widest">Habits</span>
                     </button>
                     <button onclick="openEditModal('morning')" class="meta-icon-box" id="btn-morning">
-                        <i class="fa-regular fa-sun text-brand-muted/50 text-xl"></i>
-                        <span class="text-[8px] mt-2 font-bold uppercase">AM</span>
+                        <i class="fa-regular fa-sun text-brand-muted/50 text-2xl transition-colors"></i>
+                        <span class="text-[8px] mt-2 font-bold uppercase tracking-widest">AM</span>
                     </button>
                     <button onclick="openEditModal('afternoon')" class="meta-icon-box" id="btn-afternoon">
-                        <i class="fa-solid fa-sun text-brand-muted/50 text-xl"></i>
-                        <span class="text-[8px] mt-2 font-bold uppercase">Day</span>
+                        <i class="fa-solid fa-sun text-brand-muted/50 text-2xl transition-colors"></i>
+                        <span class="text-[8px] mt-2 font-bold uppercase tracking-widest">Day</span>
                     </button>
-                    <button onclick="openEditModal('evening')" class="meta-icon-box col-span-2 aspect-auto py-4" id="btn-evening">
-                        <i class="fa-solid fa-moon text-brand-muted/50 text-xl"></i>
-                        <span class="text-[8px] mt-1 font-bold uppercase">Evening</span>
+                    <button onclick="openEditModal('evening')" class="meta-icon-box col-span-2 aspect-auto py-5" id="btn-evening">
+                        <i class="fa-solid fa-moon text-brand-muted/50 text-2xl transition-colors"></i>
+                        <span class="text-[8px] mt-1 font-bold uppercase tracking-widest">Evening</span>
                     </button>
                 </div>
-                <!-- FUTURE SIDE -->
+                <!-- RIGHT: FUTURE -->
                 <div class="flex flex-col gap-4">
                     <button onclick="openEditModal('future')" class="meta-icon-box" id="btn-future">
-                        <i class="fa-solid fa-paper-plane text-brand-muted/50 text-xl"></i>
-                        <span class="text-[8px] mt-2 font-bold uppercase">Next</span>
+                        <i class="fa-solid fa-paper-plane text-brand-muted/50 text-2xl transition-colors"></i>
+                        <span class="text-[8px] mt-2 font-bold uppercase tracking-widest">Next</span>
                     </button>
                 </div>
             </div>
-            <p class="text-center text-[9px] text-brand-muted mt-8 uppercase tracking-[0.3em]">Causality Cockpit</p>
+            <p class="text-center text-[8px] text-brand-muted/50 mt-12 uppercase tracking-[0.5em]">System Cockpit Active</p>
         </div>
 
-        <!-- Footer Grid Features -->
+        <!-- Clinical, Photos, Meds, Tarot -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto pb-20">
-             <!-- Clinical, Photos, Medicine, Tarot (Keep condensed) -->
-             <div class="bg-brand-main rounded-[2rem] p-6 border border-white/5 flex flex-col shadow-xl">
-                 <h4 class="font-serif text-xs font-bold mb-4 flex items-center gap-3"><i class="fa-solid fa-hospital text-blue-400"></i> 通院記録</h4>
-                 <input type="text" id="clinic-name" class="clinic-input mb-2" placeholder="病院名">
-                 <textarea id="clinic-memo" class="bg-brand-dark/30 border border-white/5 rounded-xl p-3 text-[10px] w-full h-24 focus:outline-none" placeholder="診断・指示..."></textarea>
+             <div class="bg-brand-main rounded-[2.5rem] p-8 border border-white/5 flex flex-col shadow-xl">
+                 <h4 class="font-serif text-sm font-bold mb-4 flex items-center gap-3"><i class="fa-solid fa-hospital text-blue-400"></i> 通院記録</h4>
+                 <input type="text" id="clinic-name" class="clinic-input mb-3" placeholder="病院名">
+                 <textarea id="clinic-memo" class="bg-brand-dark/30 border border-white/5 rounded-xl p-3 text-[10px] w-full h-32 focus:outline-none focus:border-brand-accent/30" placeholder="診断・指示..."></textarea>
              </div>
-             <div class="bg-brand-main rounded-[2rem] p-6 border border-white/5 flex flex-col shadow-xl">
-                 <h4 class="font-serif text-xs font-bold mb-4 text-brand-accent"><i class="fa-solid fa-camera-retro"></i> 写真記録</h4>
+             <div class="bg-brand-main rounded-[2.5rem] p-8 border border-white/5 flex flex-col shadow-xl">
+                 <h4 class="font-serif text-sm font-bold mb-4 text-brand-accent"><i class="fa-solid fa-camera-retro"></i> 写真記録</h4>
                  <div id="photo-gallery" class="flex-1 grid grid-cols-2 gap-2 overflow-y-auto">
                      <label class="photo-slot flex flex-col items-center justify-center cursor-pointer order-last hover:border-brand-accent transition-all"><i class="fa-solid fa-plus text-xs"></i><input type="file" id="gallery-photo-input" class="hidden" accept="image/*"></label>
                  </div>
              </div>
-             <div class="bg-brand-main rounded-[2rem] p-6 border border-white/5 flex flex-col shadow-xl">
-                 <h4 class="font-serif text-xs font-bold mb-4 text-red-400"><i class="fa-solid fa-pills"></i> お薬</h4>
-                 <div id="medicine-list" class="flex-1 space-y-2 overflow-y-auto"></div>
-                 <div class="flex gap-2 mt-3"><input type="text" id="med-input-name" class="flex-1 bg-brand-dark border border-white/10 rounded-xl py-1.5 px-3 text-[10px] focus:outline-none"><button id="add-med" class="w-8 h-8 bg-brand-accent text-brand-dark rounded-xl font-bold flex items-center justify-center">+</button></div>
+             <div class="bg-brand-main rounded-[2.5rem] p-8 border border-white/5 flex flex-col shadow-xl">
+                 <h4 class="font-serif text-sm font-bold mb-4 text-red-400"><i class="fa-solid fa-pills"></i> お薬</h4>
+                 <div id="medicine-list" class="flex-1 space-y-2 overflow-y-auto pr-1"></div>
+                 <div class="flex gap-2 mt-4"><input type="text" id="med-input-name" class="flex-1 bg-brand-dark border border-white/10 rounded-xl py-2 px-3 text-[10px] focus:outline-none"><button id="add-med" class="w-10 h-10 bg-brand-accent text-brand-dark rounded-xl font-bold flex items-center justify-center hover:scale-110 transition-transform shadow-lg">+</button></div>
              </div>
-             <div class="bg-brand-main rounded-[2rem] p-6 border border-white/5 flex flex-col shadow-xl items-center justify-center">
-                 <div id="tarot-card" class="w-20 h-32 cursor-pointer card-inner group">
-                     <div class="card-front rounded-xl border border-brand-accent/20 bg-brand-dark flex items-center justify-center"><i class="fa-solid fa-star text-brand-accent/10"></i></div>
-                     <div class="card-back rounded-xl border border-brand-accent/50 bg-brand-main flex flex-col items-center justify-center p-2 text-center">
-                         <i id="tarot-icon" class="fa-solid text-brand-accent text-xl mb-1"></i>
-                         <h5 id="tarot-name" class="font-bold text-[8px]"></h5>
+             <div class="bg-brand-main rounded-[2.5rem] p-8 border border-white/5 flex flex-col shadow-xl items-center justify-center">
+                 <div id="tarot-card" class="w-24 h-40 cursor-pointer card-inner group">
+                     <div class="card-front rounded-2xl border-2 border-brand-accent/20 bg-brand-dark flex flex-col items-center justify-center p-2 text-center group-hover:border-brand-accent transition-all">
+                         <i class="fa-solid fa-star text-brand-accent/10 text-3xl mb-2"></i>
+                         <span class="text-[8px] text-brand-accent/30 tracking-widest">Draw</span>
+                     </div>
+                     <div class="card-back rounded-2xl border-2 border-brand-accent/50 bg-brand-main flex flex-col items-center justify-center p-3 text-center">
+                         <i id="tarot-icon" class="fa-solid text-brand-accent text-2xl mb-2"></i>
+                         <h5 id="tarot-name" class="font-bold text-[8px] mb-1"></h5>
+                         <p id="tarot-desc" class="text-[8px] text-brand-muted leading-relaxed"></p>
                      </div>
                  </div>
              </div>
         </div>
     </main>
 
-    <!-- UI Overlay Elements -->
-    <div id="history-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity"></div>
+    <!-- UI Overlays -->
+    <div id="history-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity"></div>
     <div id="history-sidebar" class="fixed top-0 right-0 h-full w-full max-w-sm bg-brand-main border-l border-white/10 z-[70] p-10 shadow-2xl flex flex-col translate-x-full transition-transform">
-        <h2 class="font-serif text-2xl font-bold text-brand-accent mb-8 text-center tracking-widest uppercase">History</h2>
+        <h2 class="font-serif text-2xl font-bold text-brand-accent mb-8 text-center tracking-widest uppercase">Saved Logs</h2>
         <div id="history-list" class="flex-1 space-y-3 overflow-y-auto pr-2"></div>
-        <button id="close-history" class="mt-8 text-[10px] text-brand-muted uppercase tracking-[0.3em] hover:text-white">Close Log</button>
+        <button id="close-history" class="mt-10 text-[10px] text-brand-muted uppercase tracking-[0.4em] hover:text-white transition-colors">Close Portal</button>
     </div>
-    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-brand-accent text-brand-dark px-8 py-3 rounded-full font-bold text-xs opacity-0 pointer-events-none transition-opacity shadow-2xl z-[100]">SAVED SUCCESS</div>
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-brand-accent text-brand-dark px-8 py-3 rounded-full font-bold text-xs opacity-0 pointer-events-none transition-opacity shadow-2xl z-[100] tracking-widest uppercase">System Recorded</div>
 
     <script>
+        // --- IMPORTANT: GAS Web App URL here ---
         const GAS_WEBAPP_URL = ""; 
+
         const DB_NAME = 'SavePointDB_vMobileUI';
         let db;
         let isRegisterMode = false;
@@ -289,7 +280,7 @@
         request.onsuccess = (e) => { db = e.target.result; checkLoginState(); };
         request.onupgradeneeded = (e) => { e.target.result.createObjectStore('logs', { keyPath: 'date' }); };
 
-        // --- AUTH LOGIC ---
+        // --- AUTH LOGIC (ENHANCED ERROR HANDLING) ---
         const authBtn = document.getElementById('auth-submit-btn');
         const authToggle = document.getElementById('auth-toggle');
         const regNameField = document.getElementById('reg-name-field');
@@ -304,31 +295,65 @@
         };
 
         authBtn.onclick = async () => {
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-pw').value;
-            const name = document.getElementById('reg-name').value;
-            if (!email || !password || (isRegisterMode && !name)) { authError.innerText = "すべての項目を入力してください。"; authError.classList.remove('hidden'); return; }
-            authBtn.disabled = true; authBtn.innerText = "通信中...";
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-pw').value.trim();
+            const name = document.getElementById('reg-name').value.trim();
+
+            if (!email || !password || (isRegisterMode && !name)) {
+                showAuthError("すべての項目を入力してください。");
+                return;
+            }
+
+            authBtn.disabled = true;
+            authBtn.innerText = isRegisterMode ? "通信中..." : "認証中...";
+            authError.classList.add('hidden');
+
             try {
                 if (!GAS_WEBAPP_URL) {
-                    if (!isRegisterMode && email === "admin@test.com" && password === "1234") { onAuthSuccess({ id: email, name: "管理者" }); }
-                    else if (isRegisterMode) { alert("登録申請を受け付けました（モック）"); location.reload(); }
-                    else { throw new Error("認証に失敗しました。admin@test.com / 1234 をお試しください。"); }
+                    // Mock Testing
+                    if (!isRegisterMode && email === "admin@test.com" && password === "1234") {
+                        onAuthSuccess({ id: email, name: "管理者" });
+                    } else if (isRegisterMode) {
+                        alert("登録申請を受け付けました（モック動作）");
+                        location.reload();
+                    } else { throw new Error("GASのURLが設定されていません。\nadmin@test.com / 1234 でテストログイン可能です。"); }
                 } else {
-                    const res = await fetch(GAS_WEBAPP_URL, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ action: isRegisterMode?'register':'login', email, password, name }) });
+                    const action = isRegisterMode ? 'register' : 'login';
+                    const res = await fetch(GAS_WEBAPP_URL, {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: { 'Content-Type': 'text/plain' },
+                        body: JSON.stringify({ action, email, password, name })
+                    });
+                    
+                    if (!res.ok) throw new Error(`サーバーエラー (Status: ${res.status})\nURLとデプロイ設定を確認してください。`);
+                    
                     const result = await res.json();
-                    if (result.success && !isRegisterMode) { onAuthSuccess(result.user); }
-                    else if (result.success && isRegisterMode) { alert(result.message); location.reload(); }
-                    else { throw new Error(result.message || "認証エラー"); }
+                    if (result.success && !isRegisterMode) {
+                        onAuthSuccess(result.user);
+                    } else if (result.success && isRegisterMode) {
+                        alert(result.message || "登録申請完了！承認をお待ちください。");
+                        location.reload();
+                    } else {
+                        throw new Error(result.message || "認証に失敗しました。詳細不明。");
+                    }
                 }
-            } catch (err) { authError.innerText = "【エラー】 " + err.message; authError.classList.remove('hidden'); authBtn.disabled = false; authBtn.innerText = isRegisterMode ? "アカウントを作成" : "ログイン"; }
+            } catch (err) {
+                showAuthError(err.message);
+                authBtn.disabled = false;
+                authBtn.innerText = isRegisterMode ? "アカウントを作成" : "ログイン";
+            }
         };
+
+        function showAuthError(msg) {
+            authError.innerText = "【認証エラー】\n" + msg;
+            authError.classList.remove('hidden');
+        }
 
         function onAuthSuccess(user) {
             sessionStorage.setItem('savepoint_user', JSON.stringify(user));
             document.getElementById('auth-overlay').classList.add('hidden');
             document.getElementById('app-content').classList.remove('blur-2xl', 'pointer-events-none');
-            document.getElementById('user-display').innerText = user.name;
             loadCurrentDate();
         }
 
@@ -343,29 +368,34 @@
         let currentDate = new Date().toISOString().split('T')[0];
         const fieldIds = ['field-past', 'field-morning', 'field-afternoon', 'field-evening', 'field-future', 'field-habits-text'];
         const metaInfo = {
-            'past': { title: 'Past', icon: 'fa-history', desc: '過去の要因・以前の自分' },
-            'morning': { title: 'Morning', icon: 'fa-regular fa-sun', desc: '朝の状態・目覚めの感覚' },
-            'afternoon': { title: 'Afternoon', icon: 'fa-solid fa-sun', desc: '昼間の活動・癖の発生' },
-            'evening': { title: 'Evening', icon: 'fa-solid fa-moon', desc: '一日の振り返り・違和感' },
-            'future': { title: 'Future', icon: 'fa-solid fa-paper-plane', desc: '明日への対策・実験予定' },
-            'habits-text': { title: 'Habits', icon: 'fa-solid fa-person-rays', desc: '今日気づいた自分の癖や習慣' }
+            'past': { title: 'Timeline - Past', icon: 'fa-history', desc: '以前の自分・病歴・要因' },
+            'morning': { title: 'Morning Log', icon: 'fa-regular fa-sun', desc: '朝の状態・夢・目覚めの感覚' },
+            'afternoon': { title: 'Afternoon Log', icon: 'fa-solid fa-sun', desc: '昼間の活動・癖・気候の変化' },
+            'evening': { title: 'Evening Log', icon: 'fa-solid fa-moon', desc: '一日の振り返り・違和感の正体' },
+            'future': { title: 'Strategy - Future', icon: 'fa-solid fa-paper-plane', desc: '明日への対策・実験・予定' },
+            'habits-text': { title: 'Habits Tracker', icon: 'fa-solid fa-person-rays', desc: '無意識にとっている自分の癖や習慣' }
         };
 
         function loadCurrentDate() {
             document.getElementById('date-picker').value = currentDate;
             const dateStr = new Date(currentDate).toLocaleDateString('ja-JP', { year:'numeric', month:'long', day:'numeric', weekday:'short' });
-            document.getElementById('display-date').innerText = dateStr;
-            document.getElementById('display-date-mobile').innerText = dateStr;
+            const pDates = ['display-date-mobile']; // PC版はID重複を避ける
+            pDates.forEach(id => { const el = document.getElementById(id); if(el) el.innerText = dateStr; });
             
             db.transaction(['logs'], 'readonly').objectStore('logs').get(currentDate).onsuccess = (e) => {
                 const d = e.target.result || {};
                 fieldIds.forEach(id => {
-                    const val = d[id.split('-')[1]] || "";
+                    const key = id.split('-')[1];
+                    const val = d[key] || "";
                     const el = document.getElementById(id);
                     if (el) el.value = val;
-                    // Mobile Indicator
-                    const btn = document.getElementById(`btn-${id.split('-')[1]}`);
-                    if (btn) btn.classList.toggle('active', val.length > 0);
+                    // Mobile Meta Logic
+                    const btn = document.getElementById(`btn-${key}`);
+                    if (btn) {
+                        btn.classList.toggle('active', val.length > 0);
+                        const icon = btn.querySelector('i');
+                        if (icon) icon.className = icon.className.replace('text-brand-muted/50', 'text-brand-accent');
+                    }
                 });
                 renderMedicine(d.medicines || []);
                 renderGallery(d.photos || []);
@@ -374,15 +404,18 @@
 
         function saveData() {
             const data = { date: currentDate };
-            fieldIds.forEach(id => { const val = document.getElementById(id).value; data[id.split('-')[1]] = val; });
+            fieldIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) data[id.split('-')[1]] = el.value;
+            });
             data.medicines = Array.from(document.querySelectorAll('.med-item')).map(m=>({name:m.dataset.name, taken:m.classList.contains('taken')}));
             data.photos = Array.from(document.querySelectorAll('.photo-item')).map(p=>({data:p.src}));
             db.transaction(['logs'], 'readwrite').objectStore('logs').put(data);
             const t = document.getElementById('toast'); t.classList.remove('opacity-0'); setTimeout(() => t.classList.add('opacity-0'), 2000);
-            loadCurrentDate(); // Update Mobile indicators
+            loadCurrentDate();
         }
 
-        // --- MOBILE MODAL LOGIC ---
+        // --- MOBILE MODAL SYSTEM ---
         let currentModalField = '';
         const modal = document.getElementById('edit-modal');
         const modalText = document.getElementById('modal-textarea');
@@ -406,55 +439,61 @@
 
         document.getElementById('close-modal').onclick = () => modal.classList.add('hidden');
 
-        // --- CHAT / BOT ---
+        // --- BOT & INTERACTION ---
         async function handleChat(text) {
             const cont = document.getElementById('chat-container');
             const u = document.createElement('div'); u.className="flex justify-end"; u.innerHTML=`<div class="chat-bubble-user bg-brand-accent/20 text-brand-accent p-3 text-[10px] shadow-sm max-w-[85%]">${text}</div>`;
             cont.appendChild(u);
-            document.getElementById('field-evening').value += (document.getElementById('field-evening').value ? "\n" : "") + `[Save-kun] ${text}`;
+            document.getElementById('field-evening').value += (document.getElementById('field-evening').value ? "\n" : "") + `[Saved with Save-kun] ${text}`;
             saveData();
             setTimeout(() => {
-                const rep = "記録したよ！今日のダッシュボードにも反映しておいた。";
-                const b = document.createElement('div'); b.innerHTML=`<div class="chat-bubble-bot bg-brand-main border border-white/10 p-3 text-brand-text/90 shadow-sm max-w-[85%]">${rep}</div>`;
+                const rep = "記録完了！ダッシュボードに反映したよ。他にもある？";
+                const b = document.createElement('div'); b.innerHTML=`<div class="chat-bubble-bot bg-brand-main border border-white/10 p-3 text-brand-text/90 shadow-sm max-w-[85%] leading-relaxed">${rep}</div>`;
                 cont.appendChild(b); cont.scrollTop = cont.scrollHeight;
             }, 800);
             document.getElementById('chat-input').value = "";
         }
-        document.getElementById('send-chat').onclick = () => handleChat(document.getElementById('chat-input').value.trim());
+        document.getElementById('send-chat').onclick = () => { const t = document.getElementById('chat-input').value.trim(); if(t) handleChat(t); };
 
-        // --- SUB FEATURES ---
+        // --- ADDITIONAL FEATURES ---
         function renderMedicine(meds) {
-            document.getElementById('medicine-list').innerHTML = meds.map(m => `<div class="med-item flex items-center justify-between p-2 rounded border border-white/5 bg-brand-dark/40 ${m.taken?'taken opacity-40grayscale':''}" data-name="${m.name}"><span class="text-[9px] font-bold text-brand-accent">${m.name}</span><button class="text-[8px] border border-white/20 px-2 py-0.5 rounded" onclick="this.parentElement.classList.toggle('taken');saveData();">${m.taken?'済':'服用'}</button></div>`).join('');
+            document.getElementById('medicine-list').innerHTML = meds.map(m => `<div class="med-item flex items-center justify-between p-3 rounded-xl border border-white/5 bg-brand-dark/40 ${m.taken?'taken opacity-40 grayscale':''}" data-name="${m.name}"><span class="text-[10px] font-bold text-brand-accent">${m.name}</span><button class="text-[8px] border border-white/20 px-3 py-1 rounded-full transition-all ${m.taken?'bg-brand-accent text-brand-dark border-brand-accent':'border-white/20 hover:border-brand-accent'}" onclick="this.parentElement.classList.toggle('taken');saveData();">${m.taken?'済':'服用'}</button></div>`).join('');
         }
         document.getElementById('add-med').onclick = () => { const n=document.getElementById('med-input-name'); if(!n.value)return; const cur=Array.from(document.querySelectorAll('.med-item')).map(m=>({name:m.dataset.name,taken:m.classList.contains('taken')})); cur.push({name:n.value,taken:false}); renderMedicine(cur); n.value=""; saveData(); };
 
         function renderGallery(photos) {
             const g = document.getElementById('photo-gallery');
-            g.innerHTML = `<label class="photo-slot flex flex-col items-center justify-center cursor-pointer order-last"><i class="fa-solid fa-plus text-xs"></i><input type="file" id="gallery-photo-input" class="hidden" accept="image/*"></label>`;
+            g.innerHTML = `<label class="photo-slot flex flex-col items-center justify-center cursor-pointer order-last hover:border-brand-accent transition-all"><i class="fa-solid fa-plus text-xs"></i><input type="file" id="gallery-photo-input" class="hidden" accept="image/*"></label>`;
             photos.forEach(p => { const img = document.createElement('img'); img.src = p.data; img.className = "photo-item w-full h-full object-cover rounded-lg"; g.prepend(img); });
             document.getElementById('gallery-photo-input').onchange = (e) => { const r = new FileReader(); r.onload = (ev) => { const img = document.createElement('img'); img.src = ev.target.result; img.className="photo-item w-full h-full object-cover rounded-lg"; g.prepend(img); saveData(); }; r.readAsDataURL(e.target.files[0]); };
         }
 
         document.getElementById('tarot-card').onclick = function() {
-            if(this.classList.contains('card-flipped'))return;
-            const c = [{n:"運命の輪",i:"fa-dharmachakra"},{n:"星",i:"fa-star"}]; const r = c[Math.floor(Math.random()*c.length)];
-            document.getElementById('tarot-icon').className = `fa-solid ${r.i} text-brand-accent text-2xl`;
-            document.getElementById('tarot-name').innerText = r.n; this.classList.add('card-flipped');
+            if(this.classList.contains('card-flipped')) return;
+            const c = [
+                {n:"運命の輪",i:"fa-dharmachakra",d:"変化の時。君の決断が未来を作る。"},
+                {n:"星",i:"fa-star",d:"静かな希望。些細な習慣が光を照らす。"},
+                {n:"太陽",i:"fa-sun",d:"明快な成功。君のエネルギーは正しい方向へ向かっている。"}
+            ]; 
+            const r = c[Math.floor(Math.random()*c.length)];
+            document.getElementById('tarot-icon').className = `fa-solid ${r.i} text-brand-accent text-3xl mb-2`;
+            document.getElementById('tarot-name').innerText = r.n;
+            document.getElementById('tarot-desc').innerText = r.d;
+            this.classList.add('card-flipped');
         };
 
-        // --- HISTORY ---
+        // --- HISTORY PORTAL ---
         document.getElementById('history-btn').onclick = () => {
             const side = document.getElementById('history-sidebar'); side.classList.remove('translate-x-full');
             document.getElementById('history-overlay').classList.remove('opacity-0', 'pointer-events-none');
             db.transaction(['logs'],'readonly').objectStore('logs').getAll().onsuccess = (e) => {
-                document.getElementById('history-list').innerHTML = e.target.result.sort((a,b)=>b.date.localeCompare(a.date)).map(l => `<div class="p-4 border border-white/5 bg-brand-dark/30 rounded-2xl cursor-pointer" onclick="currentDate='${l.date}';loadCurrentDate();document.getElementById('close-history').click();"><span class="text-xs text-brand-accent font-bold">${l.date}</span></div>`).join('');
+                document.getElementById('history-list').innerHTML = e.target.result.sort((a,b)=>b.date.localeCompare(a.date)).map(l => `<div class="p-5 border border-white/5 bg-brand-dark/30 rounded-2xl cursor-pointer hover:border-brand-accent/50 transition-all text-xs font-bold text-brand-accent tracking-widest text-center uppercase" onclick="currentDate='${l.date}';loadCurrentDate();document.getElementById('close-history').click();">${l.date.replace(/-/g, '.')}</div>`).join('');
             };
         };
         document.getElementById('close-history').onclick = () => { document.getElementById('history-sidebar').classList.add('translate-x-full'); document.getElementById('history-overlay').classList.add('opacity-0', 'pointer-events-none'); };
         document.getElementById('history-overlay').onclick = document.getElementById('close-history').onclick;
 
-        // General Binds
-        document.getElementById('save-btn').onclick = saveData;
+        // Save & Sync
         document.getElementById('date-picker').onchange = (e) => { currentDate = e.target.value; loadCurrentDate(); };
         fieldIds.forEach(id => { const el = document.getElementById(id); if(el) el.onblur = saveData; });
 
